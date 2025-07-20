@@ -1,0 +1,51 @@
+
+* {
+    /*border: 1px solid red;*/
+    padding: 0;
+
+}
+
+.site-header {
+    margin-bottom: 1rem;
+}
+
+h1 {
+    margin-left: 2.5rem;
+}
+
+h1 > a {
+    font-family: 'Montserrat', sans-serif;
+    color:  #D8DEE9;
+    text-decoration: none;
+}
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+}
+
+ul > li {
+    list-style: none;
+}
+
+.main-nav a {
+    padding: 0.5rem;
+    color: #8FBCBB;         /* muted teal-blue */
+    text-decoration: none;
+    transition: color 0.2s ease-in-out;
+}
+
+.main-nav a:hover,
+.main-nav a:focus {
+    color: #88C0D0;         /* lighter, more vibrant cyan */
+    text-decoration: underline;
+}
