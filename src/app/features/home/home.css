@@ -12,3 +12,20 @@
     align-items: center;
     gap: 1em;
 }
+
+.container {
+    border: none;
+    background-color: var(--bg-primary);
+    padding: 0;
+}
+
+a, .btn {
+    display: block;
+    text-align: center;
+}
+
+h2 {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
