@@ -1,0 +1,13 @@
+/** {*/
+/*    border: 1px solid red;*/
+/*}*/
+
+.destination-board {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+}
+
+.destination-board > * {
+    flex: 1 1 0;
+}

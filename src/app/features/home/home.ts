@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import {Destination} from "../destination/destination";
+import {DestinationBoard} from "../destinations/destination-board/destination-board";
 
 @Component({
   selector: 'app-home',
     imports: [
-        Destination
+        DestinationBoard
     ],
   templateUrl: './home.html',
   standalone: true,

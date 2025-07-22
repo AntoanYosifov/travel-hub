@@ -1,0 +1,39 @@
+
+.wrapper {
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    padding: 1em;
+}
+
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em;
+}
+
+figure {
+    max-width: 50%;
+    flex: 1 1 0;
+
+}
+
+.img-wrapper {
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+button {
+    font-size: 0.9em;
+    background-color: #161b22;
+    color: var(--accent);
+    cursor: pointer;
+    transition: color 0.2s ease-in-out;
+    border-radius: 6px;
+    padding: 0.5em;
+}
