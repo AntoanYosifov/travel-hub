@@ -1,8 +1,7 @@
 <div class="container card destination-board">
-    <app-destination-item></app-destination-item>
-    <app-destination-item></app-destination-item>
-    <app-destination-item></app-destination-item>
-    <app-destination-item></app-destination-item>
+    @for (destination of destinations; track destination.id) {
+        <app-destination-item [destination]="destination"></app-destination-item>
+    }
 </div>
 
 

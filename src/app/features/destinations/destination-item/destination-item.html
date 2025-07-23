@@ -1,15 +1,15 @@
 <div class="wrapper">
     <div class="flex-container">
         <header class="destination-header">
-            <h5 class="location-name">Rodopi Mountains</h5>
+            <h5 class="location-name">{{ destination.locationName }}</h5>
         </header>
 
         <figure class="destination-image">
             <div class="img-wrapper">
-                <img src="https://exodus-website.s3.amazonaws.com/uploads/2014/10/AdobeStock_115482347-1024x436.jpeg"
+                <img [src]="destination.imgUrl"
                      alt="Photo of the destination"/>
             </div>
-            <figcaption>www.something.com</figcaption>
+            <figcaption>{{ destination.photoCredit}}</figcaption>
         </figure>
     </div>
 

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
+import {Destination} from "../../../models/destination.model";
 
 @Component({
   selector: 'app-destination-item',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './destination-item.css'
 })
 export class DestinationItem {
-
+  @Input() destination!: Destination;
 }
