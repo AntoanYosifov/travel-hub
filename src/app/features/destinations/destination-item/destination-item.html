@@ -14,9 +14,8 @@
     </div>
 
     <section class="destination-description">
-        <h5>About this place...</h5>
-        <a href="#">
-            <button class="btn">Learn more</button>
+        <a [routerLink]="['/destinations', destination.id]" class="btn">
+                Details
         </a>
     </section>
 </div>
