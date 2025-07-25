@@ -13,4 +13,5 @@ import {RouterLink} from "@angular/router";
 })
 export class DestinationItem {
   @Input() destination!: Destination;
+  @Input() showDetailsLink = true;
 }

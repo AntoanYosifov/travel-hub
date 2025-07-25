@@ -13,9 +13,12 @@
         </figure>
     </div>
 
-    <section class="destination-description">
-        <a [routerLink]="['/destinations', destination.id]" class="btn">
+    @if(showDetailsLink) {
+        <section class="destination-description">
+            <a [routerLink]="['/destinations', destination.id]" class="btn">
                 Details
-        </a>
-    </section>
+            </a>
+        </section>
+    }
+
 </div>
