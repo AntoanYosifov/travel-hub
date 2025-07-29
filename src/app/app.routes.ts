@@ -20,10 +20,15 @@ export const routes: Routes = [
                     () => import('./features/destinations/destination-board/destination-board').then(c => c.DestinationBoard)
             },
             {
+              path: 'new',
+              loadComponent:
+                  () => import('./features/destinations/new-destination/new-destination').then(c => c.NewDestination)
+            },
+            {
                 path: ':id',
                 loadComponent:
                     () => import('./features/destinations/destination-details/destination-details').then(c => c.DestinationDetails)
-            }
+            },
 
         ]
     }

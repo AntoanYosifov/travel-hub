@@ -1,6 +1,15 @@
 import {Injectable} from "@angular/core";
-import {collection, collectionData, CollectionReference, doc, docData,DocumentReference, Firestore} from "@angular/fire/firestore";
-import {Observable} from "rxjs";
+import {
+    addDoc,
+    collection,
+    collectionData,
+    CollectionReference,
+    doc,
+    docData,
+    DocumentReference,
+    Firestore
+} from "@angular/fire/firestore";
+import {from, map, Observable} from "rxjs";
 import {Destination} from "../../models/destination.model";
 
 
@@ -23,5 +32,15 @@ export class DestinationsService {
     getDestinationById(id: string): Observable<Destination | undefined> {
         let docRef = doc(this.firestore, `destinations/${id}`) as DocumentReference<Destination>;
         return docData<Destination>(docRef, {idField: 'id'})
+    }
+
+    addDestination(data: Omit<Destination, "id">): Observable<Destination> {
+        const col = collection(this.firestore, this.destinationsCollectionPath) as CollectionReference<Destination>;
+        return  from(addDoc(col, data)).pipe(
+            map(ref => ({
+                id: ref.id,
+                ...data
+            }))
+        );
     }
 }

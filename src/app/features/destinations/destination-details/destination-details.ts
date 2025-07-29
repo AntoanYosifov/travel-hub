@@ -12,25 +12,23 @@ import {DestinationsService} from "../../../core/services/destinations.service";
     standalone: true,
     styleUrl: './destination-details.css'
 })
-export class DestinationDetails implements OnInit, OnDestroy{
+export class DestinationDetails implements OnInit, OnDestroy {
     destination?: Destination;
     private routeSub?: Subscription;
     private dataSub?: Subscription;
 
     constructor(private route: ActivatedRoute,
-                private destinationService: DestinationsService) {}
+                private destinationService: DestinationsService) {
+    }
 
 
     ngOnInit(): void {
         this.routeSub = this.route.paramMap.subscribe(pm => {
             const id = pm.get('id');
 
-            if(!id) {
-                console.log('Missing id');
+            if (!id) {
                 return
             }
-
-            console.log(id);
 
             this.dataSub?.unsubscribe();
             this.destination = undefined;
@@ -43,8 +41,8 @@ export class DestinationDetails implements OnInit, OnDestroy{
     }
 
     ngOnDestroy(): void {
-       this.routeSub?.unsubscribe();
-       this.dataSub?.unsubscribe();
+        this.routeSub?.unsubscribe();
+        this.dataSub?.unsubscribe();
     }
 
 }
