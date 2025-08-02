@@ -138,7 +138,8 @@ export class Register {
             return;
         }
 
-        const {displayName, email, password} = this.registerForm.value;
+        const {displayName, email, passwords} = this.registerForm.value;
+        const password = passwords.password;
 
         this.authService.register$(displayName, email, password).subscribe(
             {
