@@ -8,6 +8,14 @@ service cloud.firestore {
       allow create, update, delete: if request.auth != null;
     }
 
+    match /users/{uid} {
+        allow create: if request.auth != null
+        && request.auth.uid == uid;
+
+         allow get, update, delete: if request.auth != null
+                                         && request.auth.uid == uid;
+    }
+
     match /{path=**} {
       allow read, write: if false;
     }
