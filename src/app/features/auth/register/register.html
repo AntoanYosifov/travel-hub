@@ -1,29 +1,43 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
-    <div>
-        <label for="displayName">Display Name</label><br />
-        <input id="displayName"
-               formControlName="displayName"/>
+
+<div class="new-destination card outer-container" >
+    <div class="inner-container">
+        <h4>Registration</h4>
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="displayName">Display Name</label><br />
+                <input [class.input-error]="isDisplayNameNotValid"  id="displayName"
+                       formControlName="displayName"/>
+                @if(isDisplayNameNotValid) {
+                    <p class="error">
+                        {{ displayNameErrorMessage }}
+                    </p>
+                }
+            </div>
+
+            <div>
+                <label for="email">Email</label><br />
+                <input [class.input-error]="isEmailNotValid" id="email"
+                       formControlName="email"
+                       type="email" />
+                @if(isEmailNotValid) {
+                    <p class="error">{{ emailErrorMessage }}</p>
+                }
+            </div>
+
+            <div>
+                <label for="password">Password</label><br />
+                <input
+                        id="password"
+                        formControlName="password"
+                        type="password" />
+            </div>
+
+            <button type="submit" [disabled]="registerForm.invalid">
+                Create Account
+            </button>
+
+        </form>
+
     </div>
-
-    <div>
-        <label for="email">Email</label><br />
-        <input id="email"
-               formControlName="email"
-               type="email" />
-
-    </div>
-
-    <div>
-        <label for="password">Password</label><br />
-        <input
-                id="password"
-                formControlName="password"
-                type="password" />
-    </div>
-
-    <button type="submit" [disabled]="registerForm.invalid">
-        Register
-    </button>
-
-</form>
+</div>
 
