@@ -1,13 +1,12 @@
-
-<div class="new-destination card outer-container" >
+<div class="new-destination card outer-container">
     <div class="inner-container">
         <h4>Registration</h4>
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
             <div>
-                <label for="displayName">Display Name</label><br />
-                <input [class.input-error]="isDisplayNameNotValid"  id="displayName"
+                <label for="displayName">Display Name</label><br/>
+                <input [class.input-error]="isDisplayNameNotValid" id="displayName"
                        formControlName="displayName"/>
-                @if(isDisplayNameNotValid) {
+                @if (isDisplayNameNotValid) {
                     <p class="error">
                         {{ displayNameErrorMessage }}
                     </p>
@@ -15,21 +14,41 @@
             </div>
 
             <div>
-                <label for="email">Email</label><br />
+                <label for="email">Email</label><br/>
                 <input [class.input-error]="isEmailNotValid" id="email"
                        formControlName="email"
-                       type="email" />
-                @if(isEmailNotValid) {
+                       type="email"/>
+                @if (isEmailNotValid) {
                     <p class="error">{{ emailErrorMessage }}</p>
                 }
             </div>
+            <div formGroupName="passwords">
+                <div>
+                    <label for="password">Password</label><br/>
+                    <input [class.input-error]="isPasswordsNotValid"
+                           id="password"
+                           formControlName="password"
+                           type="password"
+                           placeholder="******"/>
+                    @if (isPasswordsNotValid) {
+                        <p class="error">{{ passwordErrorMessage }}</p>
+                    }
+                </div>
+                <div>
+                    <label for="rePassword">Confirm Password</label><br/>
+                    <input
+                            id="rePassword"
+                            formControlName="rePassword"
+                            type="password"
+                            placeholder="******"/>
+                    @if (isPasswordsNotValid) {
+                        <p class="error">{{ rePasswordErrorMessage }}</p>
+                    }
+                </div>
 
-            <div>
-                <label for="password">Password</label><br />
-                <input
-                        id="password"
-                        formControlName="password"
-                        type="password" />
+                @if(isPasswordsMismatch) {
+                    <p class="error" > {{ passwordsMismatchErrorMessage }}</p>
+                }
             </div>
 
             <button type="submit" [disabled]="registerForm.invalid">
@@ -37,7 +56,6 @@
             </button>
 
         </form>
-
     </div>
 </div>
 

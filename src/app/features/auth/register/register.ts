@@ -1,5 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+    AbstractControl,
+    FormBuilder,
+    FormGroup,
+    FormsModule,
+    ReactiveFormsModule,
+    ValidationErrors,
+    Validators
+} from "@angular/forms";
 import {Router, RouterLink} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 
@@ -19,29 +27,52 @@ export class Register {
             {
                 displayName: ['', [Validators.required, Validators.minLength(5)]],
                 email: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)]],
-                password: ['', Validators.required]
+                passwords: this.formBuilder.group({
+                    password: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[a-zA-Z0-9]+$/)]],
+                    rePassword: ['', [Validators.required, Validators.minLength(6), Validators.pattern(/^[a-zA-Z0-9]+$/)]]
+                }, {validators: this.passwordMatchValidator})
             }
         )
     }
 
-    get displayName(): AbstractControl<any,any> | null  {
+    get displayName(): AbstractControl<any, any> | null {
         return this.registerForm.get('displayName');
     }
 
-    get email(): AbstractControl<any,any> | null  {
+    get email(): AbstractControl<any, any> | null {
         return this.registerForm.get('email');
     }
 
-    get password(): AbstractControl<any,any> | null  {
-        return this.registerForm.get('password');
+    get passwords(): FormGroup<any> {
+        return this.registerForm.get('passwords') as FormGroup;
     }
 
-    get isDisplayNameNotValid() : boolean {
+    get password(): AbstractControl<any, any> | null {
+        return this.passwords.get('password');
+    }
+
+    get rePassword(): AbstractControl<any, any> | null {
+        return this.passwords.get('rePassword');
+    }
+
+
+    get isDisplayNameNotValid(): boolean {
         return this.displayName?.invalid && (this.displayName?.dirty || this.displayName?.touched) || false;
     }
 
-    get isEmailNotValid() : boolean {
+    get isEmailNotValid(): boolean {
         return this.email?.invalid && (this.email?.dirty || this.email?.touched) || false;
+    }
+
+    get isPasswordsNotValid(): boolean {
+        return this.passwords?.invalid && (this.passwords?.dirty || this.passwords?.touched) || false;
+    }
+
+    get isPasswordsMismatch(): boolean {
+        const mismatch = this.passwords.errors?.['passwordMismatch'];
+        const reTouched = this.rePassword?.dirty || this.rePassword?.touched;
+
+        return !!(mismatch && reTouched);
     }
 
     get displayNameErrorMessage(): string {
@@ -55,15 +86,50 @@ export class Register {
     }
 
     get emailErrorMessage(): string {
-        if(this.email?.errors?.['required']) {
+        if (this.email?.errors?.['required']) {
             return 'Email is required';
         }
 
-        if(this.email?.errors?.['pattern']) {
+        if (this.email?.errors?.['pattern']) {
             return 'Email is not valid';
         }
 
         return '';
+    }
+
+    get passwordErrorMessage(): string {
+        if (this.password?.errors?.['required']) {
+            return 'Password is required';
+        }
+
+        if (this.password?.errors?.['minlength']) {
+            return 'Password must be at least 6 characters!';
+        }
+
+        if (this.password?.errors?.['pattern']) {
+            return 'Password is not valid!';
+        }
+
+        return '';
+    }
+
+    get rePasswordErrorMessage(): string {
+        if (this.rePassword?.errors?.['required']) {
+            return 'You must confirm your password!';
+        }
+
+        if (this.rePassword?.errors?.['minlength']) {
+            return 'Password must be at least 6 characters!';
+        }
+        if (this.rePassword?.errors?.['pattern']) {
+            return 'Password is not valid!';
+        }
+
+        return '';
+    }
+
+    get passwordsMismatchErrorMessage(): string {
+        return 'Passwords do not match!';
     }
 
     onSubmit() {
@@ -85,5 +151,16 @@ export class Register {
                 }
             }
         )
+    }
+
+    private passwordMatchValidator(passwordsControl: AbstractControl): ValidationErrors | null {
+        const password = passwordsControl.get('password');
+        const rePassword = passwordsControl.get('rePassword');
+
+        if(password && rePassword && password.value !== rePassword.value) {
+            return {passwordMismatch: true}
+        }
+
+        return null;
     }
 }
