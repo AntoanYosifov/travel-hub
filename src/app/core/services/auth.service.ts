@@ -1,13 +1,13 @@
-import {Injectable, signal} from "@angular/core";
+import {computed, Injectable, signal} from "@angular/core";
 import {
     Auth,
-    createUserWithEmailAndPassword,
+    createUserWithEmailAndPassword, onAuthStateChanged,
     signInWithEmailAndPassword, signOut,
     User as FirebaseUser
 } from "@angular/fire/auth";
 import {doc, docData, DocumentReference, Firestore, setDoc} from "@angular/fire/firestore";
 import {UserModel, UserProfileDefaults} from "../../models/user.model";
-import {from, map, Observable} from "rxjs";
+import {from, map, Observable, of, switchMap} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -18,20 +18,59 @@ export class AuthService {
     private _profileSignal = signal<UserModel | null>(null);
     readonly profileSignal = this._profileSignal.asReadonly();
 
+    readonly isLoggedIn = computed(() => !!this._userSignal());
+
+    private _authResolved = signal(false);
+    readonly authResolved = this._authResolved.asReadonly();
+
     constructor(private auth: Auth, private firestore: Firestore) {
-        this.auth.onAuthStateChanged(user => {
-            this._userSignal.set(user);
+        const authState$ =
+            new Observable<FirebaseUser | null>((subscriber) => {
+                const unsubscribe = onAuthStateChanged(
+                    this.auth,
+                    (user) => subscriber.next(user),
+                    (err) => subscriber.error(err)
+                );
+                return () => unsubscribe();
+            });
 
-            if (!user) {
-                this._profileSignal.set(null);
-                return;
-            }
+        let first = true;
 
-            const ref = doc(this.firestore, `users/${user.uid}`) as DocumentReference<UserModel>;
-            docData<UserModel>(ref, {idField: 'uid'})
-                .subscribe(profile => this._profileSignal.set(profile ?? null))
 
-        })
+        authState$
+            .pipe(
+                switchMap((user) => {
+                    this._userSignal.set(user);
+
+                    if (!user) {
+                        this._profileSignal.set(null);
+                        return of(null);
+                    }
+
+                    const ref = doc(
+                        this.firestore,
+                        `users/${user.uid}`
+                    ) as DocumentReference<UserModel>;
+                    return docData<UserModel>(ref, {idField: "uid"}) as Observable<UserModel | null>
+                })
+            )
+            .subscribe({
+                    next: (profile: UserModel | null) => {
+                        this._profileSignal.set(profile ?? null);
+                        if (first) {
+                            this._authResolved.set(true);
+                            first = false;
+                        }
+                    },
+                    error: (err) => {
+                        console.error("Auth pipe line error", err);
+                        if (first) {
+                            this._authResolved.set(true);
+                            first = false;
+                        }
+                    }
+                }
+            )
     }
 
     register$(displayName: string, email: string, password: string): Observable<void> {
@@ -54,9 +93,7 @@ export class AuthService {
     }
 
     login$(email: string, password: string): Observable<FirebaseUser> {
-        return from(signInWithEmailAndPassword(this.auth, email, password)).pipe(
-            map(cred => cred.user)
-        );
+        return from(signInWithEmailAndPassword(this.auth, email, password).then((cred) => cred.user));
     }
 
     logout$(): Observable<void> {
