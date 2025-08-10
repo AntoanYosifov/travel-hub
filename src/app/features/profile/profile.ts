@@ -1,5 +1,7 @@
-import {Component, computed, inject} from '@angular/core';
+import {Component, computed, effect, inject, OnInit, Signal} from '@angular/core';
 import {AuthService} from "../../core/services/auth.service";
+import {Router} from "@angular/router";
+import {UserModel} from "../../models/user.model";
 
 @Component({
   selector: 'app-profile',
@@ -8,11 +10,23 @@ import {AuthService} from "../../core/services/auth.service";
   standalone: true,
   styleUrl: './profile.css'
 })
-export class Profile {
-    private auth = inject(AuthService);
+export class Profile{
 
-    readonly authResolved = this.auth.authResolved;
-    readonly isLoggedIn = this.auth.isLoggedIn;
-    readonly profile = this.auth.profileSignal;
+    readonly authResolved: Signal<boolean>;
+    readonly isLoggedIn: Signal<boolean>;
+    readonly profile: Signal<UserModel | null>;
+
+    constructor(private authService: AuthService, private router: Router) {
+            this.authResolved = this.authService.authResolved;
+            this.isLoggedIn = this.authService.isLoggedIn;
+            this.profile = this.authService.profileSignal;
+
+        effect(() => {
+            if (this.authResolved() && !this.isLoggedIn()) {
+                this.router.navigate(['/login'])
+            }
+        })
+    }
+
 
 }

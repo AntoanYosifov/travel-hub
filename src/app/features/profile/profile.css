@@ -1,0 +1,16 @@
+
+.outer-container {
+    margin: 0 auto;
+    max-width: 30%;
+    display: flex;
+    justify-content: center;
+}
+
+.inner-container * {
+    margin-bottom: 1em;
+}
+
+label {
+    margin-right: 1em;
+}
+
