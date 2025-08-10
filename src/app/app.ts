@@ -16,8 +16,8 @@ export class App implements OnInit{
   protected title = 'TravelHub';
 
   constructor(private seed: SeedService, private auth: Auth) {
-    signInAnonymously(this.auth).then(cred => console.log('anon uid= ', cred.user.uid))
-        .catch(err => console.error('Anon sign in failed ', err));
+    // signInAnonymously(this.auth).then(cred => console.log('anon uid= ', cred.user.uid))
+    //     .catch(err => console.error('Anon sign in failed ', err));
   }
 
   ngOnInit(): void {

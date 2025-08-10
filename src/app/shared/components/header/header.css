@@ -37,15 +37,24 @@ ul > li {
     list-style: none;
 }
 
-.main-nav a {
+.main-nav a, .main-nav button {
     padding: 0.5rem;
     color: #8FBCBB;         /* muted teal-blue */
     text-decoration: none;
     transition: color 0.2s ease-in-out;
 }
 
+button {
+    border: none;
+    background: none;
+}
+
 .main-nav a:hover,
-.main-nav a:focus {
-    color: #88C0D0;         /* lighter, more vibrant cyan */
+.main-nav a:focus,
+.main-nav button:hover,
+.main-nav button:focus
+{
+    color: #88C0D0;
     text-decoration: underline;
+    cursor: pointer;
 }

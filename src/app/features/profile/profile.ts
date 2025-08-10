@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
+import {AuthService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-profile',
@@ -8,5 +9,10 @@ import { Component } from '@angular/core';
   styleUrl: './profile.css'
 })
 export class Profile {
+    private auth = inject(AuthService);
+
+    readonly authResolved = this.auth.authResolved;
+    readonly isLoggedIn = this.auth.isLoggedIn;
+    readonly profile = this.auth.profileSignal;
 
 }

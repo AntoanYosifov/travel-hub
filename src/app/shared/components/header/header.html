@@ -4,9 +4,16 @@
         <nav class="main-nav">
             <ul>
                 <li><a routerLink="/home">Home</a></li>
-                <li><a routerLink="/destinations">Destinations</a></li>
-                <li><a routerLink="/destinations/new">New Destination</a></li>
-                <li><a routerLink="/register">Register</a></li>
+                @if(authResolved()) {
+                    @if(isLoggedIn()) {
+                        <li><a routerLink="/destinations">Destinations</a></li>
+                        <li><a routerLink="/destinations/new">New Destination</a></li>
+                        <li><button type="button" (click)="logout()">Logout</button></li>
+                    } @else {
+                        <li><a routerLink="/register">Register</a></li>
+                        <li><a routerLink="/login">Login</a></li>
+                    }
+                }
             </ul>
         </nav>
     </div>

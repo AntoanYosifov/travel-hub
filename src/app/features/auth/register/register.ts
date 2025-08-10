@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {
     AbstractControl,
     FormBuilder,
@@ -107,7 +107,7 @@ export class Register {
         }
 
         if (this.password?.errors?.['pattern']) {
-            return 'Password is not valid!';
+            return 'Password must contain only Latin letters and numbers (no spaces or special characters).';
         }
 
         return '';
@@ -122,7 +122,7 @@ export class Register {
             return 'Password must be at least 6 characters!';
         }
         if (this.rePassword?.errors?.['pattern']) {
-            return 'Password is not valid!';
+            return 'Password must contain only Latin letters and numbers (no spaces or special characters).';
         }
 
         return '';

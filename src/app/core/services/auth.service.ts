@@ -36,7 +36,6 @@ export class AuthService {
 
         let first = true;
 
-
         authState$
             .pipe(
                 switchMap((user) => {

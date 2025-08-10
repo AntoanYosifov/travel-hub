@@ -1,0 +1,39 @@
+<div class="card outer-container">
+    <div class="inner-container">
+        <h4>Login</h4>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div>
+                <label for="email">Email</label><br/>
+                <input [class.input-error]="isEmailNotValid" id="email"
+                       formControlName="email"
+                       type="email"/>
+                @if (isEmailNotValid) {
+                    <p class="error">
+                        {{ emailErrorMessage }}
+                    </p>
+                }
+            </div>
+
+            <div>
+                <label for="password">Password</label><br/>
+                <input [class.input-error]="isPasswordNotValid" id="password"
+                       formControlName="password"
+                       type="password"/>
+                @if (isPasswordNotValid) {
+                    <p class="error">{{ passwordErrorMessage }}</p>
+                }
+            </div>
+
+            @if(error) {
+                <div><p class="error" >{{ error }}</p></div>
+            }
+
+            <button type="submit" [disabled]="loginForm.invalid">
+                Login
+            </button>
+
+        </form>
+    </div>
+</div>
+
+
