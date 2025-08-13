@@ -23,6 +23,7 @@ export class NewDestination {
         this.form = this.formBuilder.group(
             {
                 locationName: ['', Validators.required],
+                description: ['', Validators.required],
                 imgUrl: ['', Validators.required],
                 photoCredit: ['']
             }

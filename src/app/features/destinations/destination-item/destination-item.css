@@ -11,6 +11,10 @@
     gap: 1em;
 }
 
+.description {
+    max-width: 40%;
+}
+
 figure {
     max-width: 50%;
     flex: 1 1 0;

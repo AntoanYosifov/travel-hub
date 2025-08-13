@@ -1,19 +1,25 @@
 <div class="wrapper">
     <div class="flex-container">
-        <header class="destination-header">
-            <h5 class="location-name">{{ destination.locationName }}</h5>
-        </header>
+        <div class="description">
+            <header class="destination-header">
+                <h5 class="location-name">{{ destination.locationName }}</h5>
+            </header>
+
+            <div>
+                <p> {{ destination.description }} </p>
+            </div>
+        </div>
 
         <figure class="destination-image">
             <div class="img-wrapper">
                 <img [src]="destination.imgUrl"
                      alt="Photo of the destination"/>
             </div>
-            <figcaption>{{ destination.photoCredit}}</figcaption>
+            <figcaption>{{ destination.photoCredit }}</figcaption>
         </figure>
     </div>
 
-    @if(showDetailsLink) {
+    @if (showDetailsLink) {
         <section class="destination-description">
             <a [routerLink]="['/destinations', destination.id]" class="btn">
                 Details

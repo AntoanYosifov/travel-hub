@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {Header} from "./shared/components/header/header";
 import {Footer} from "./shared/components/footer/footer";
-import {SeedService} from "./core/seed.service";
-import {Auth, signInAnonymously} from "@angular/fire/auth";
+
+import {Auth} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-root',
@@ -12,16 +12,12 @@ import {Auth, signInAnonymously} from "@angular/fire/auth";
   styleUrl: './app.css',
   standalone: true
 })
-export class App implements OnInit{
+export class App {
   protected title = 'TravelHub';
 
-  constructor(private seed: SeedService, private auth: Auth) {
+  constructor(private auth: Auth) {
     // signInAnonymously(this.auth).then(cred => console.log('anon uid= ', cred.user.uid))
     //     .catch(err => console.error('Anon sign in failed ', err));
   }
-
-  ngOnInit(): void {
-        this.seed.seedOnce();
-    }
 
 }
