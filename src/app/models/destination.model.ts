@@ -4,4 +4,6 @@ export interface Destination {
     description: string;
     imgUrl: string;
     photoCredit: string;
+    authorId: string;
+    authorName: string
 }
