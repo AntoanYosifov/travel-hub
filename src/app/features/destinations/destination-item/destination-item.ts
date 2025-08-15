@@ -20,5 +20,5 @@ export class DestinationItem {
 
     private authService = inject(AuthService);
 
-    readonly user = this.authService.profileSignal;
+    readonly profile = this.authService.profileSignal;
 }

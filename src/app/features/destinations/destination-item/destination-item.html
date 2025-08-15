@@ -24,7 +24,7 @@
             @if(destination.id) {
                 <app-like-button
                         [destId]="destination.id!"
-                        [uid]="user()?.uid ?? null"
+                        [uid]="profile()?.uid ?? null"
                 >
                 </app-like-button>
             }
