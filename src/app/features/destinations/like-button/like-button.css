@@ -1,0 +1,19 @@
+.like-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.like-btn[disabled] {
+    opacity: .5;
+    cursor: not-allowed;
+}
+
+.count {
+    font-variant-numeric: tabular-nums;
+    color: white;
+}

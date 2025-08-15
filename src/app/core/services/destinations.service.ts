@@ -3,16 +3,18 @@ import {
     addDoc,
     collection,
     collectionData,
+    deleteDoc,
     CollectionReference,
     doc,
     docData,
     DocumentReference,
-    Firestore
+    query,
+    where,
+    documentId,
+    Firestore, setDoc
 } from "@angular/fire/firestore";
 import {from, map, Observable} from "rxjs";
 import {Destination} from "../../models/destination.model";
-
-
 
 @Injectable({
     providedIn: 'root'
@@ -30,7 +32,7 @@ export class DestinationsService {
     }
 
     getDestinationById(id: string): Observable<Destination | undefined> {
-        let docRef = doc(this.firestore, `destinations/${id}`) as DocumentReference<Destination>;
+        let docRef = doc(this.firestore, `${this.destinationsCollectionPath}/${id}`) as DocumentReference<Destination>;
         return docData<Destination>(docRef, {idField: 'id'})
     }
 
@@ -42,5 +44,26 @@ export class DestinationsService {
                 ...data
             }))
         );
+    }
+
+    hasLiked$(destId: string, uid: string): Observable<boolean> {
+        const likesCol = collection(this.firestore, `${this.destinationsCollectionPath}/${destId}/likes`);
+        const q = query(likesCol, where(documentId(), '==', uid));
+        return collectionData(q).pipe(map(arr => arr.length > 0));
+    }
+
+    likesCount$(destId: string): Observable<number> {
+        const likesCol = collection(this.firestore, `${this.destinationsCollectionPath}/${destId}/likes`);
+        return collectionData(likesCol).pipe(map(arr => arr.length));
+    }
+
+    like$(destId: string, uid: string): Observable<void> {
+        const likeRef = doc(this.firestore, `${this.destinationsCollectionPath}/${destId}/likes/${uid}`);
+        return from(setDoc(likeRef, {liked: true}));
+    }
+
+    unlike$(destId: string, uid: string): Observable<void> {
+        const likeRef = doc(this.firestore, `${this.destinationsCollectionPath}/${destId}/likes/${uid}`);
+        return from(deleteDoc(likeRef));
     }
 }

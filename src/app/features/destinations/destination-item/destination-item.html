@@ -20,6 +20,15 @@
 
         <div>
             <span>Added by: </span> <p>{{ destination.authorName}}</p>
+
+            @if(destination.id) {
+                <app-like-button
+                        [destId]="destination.id!"
+                        [uid]="user()?.uid ?? null"
+                >
+                </app-like-button>
+            }
+
         </div>
     </div>
 

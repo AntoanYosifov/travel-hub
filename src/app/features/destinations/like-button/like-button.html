@@ -1,0 +1,13 @@
+<button
+        type="button"
+        (click)="toggleLike()"
+        [disabled]="!uid"
+        aria-label="Toggle like"
+        class="like-btn"
+>   @if (hasLiked$ | async) {
+    <span>🤍</span>
+} @else {
+    <span>❤️</span>
+}
+    <span class="count">{{ (likesCount$ | async) ?? 0 }}</span>
+</button>

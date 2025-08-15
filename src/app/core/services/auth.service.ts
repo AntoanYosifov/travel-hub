@@ -1,13 +1,15 @@
 import {computed, Injectable, signal} from "@angular/core";
 import {
     Auth,
-    createUserWithEmailAndPassword, onAuthStateChanged,
-    signInWithEmailAndPassword, signOut,
+    createUserWithEmailAndPassword,
+    onAuthStateChanged,
+    signInWithEmailAndPassword,
+    signOut,
     User as FirebaseUser
 } from "@angular/fire/auth";
 import {doc, docData, DocumentReference, Firestore, setDoc} from "@angular/fire/firestore";
 import {UserModel, UserProfileDefaults} from "../../models/user.model";
-import {from, map, Observable, of, switchMap} from "rxjs";
+import {from, Observable, of, switchMap} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
