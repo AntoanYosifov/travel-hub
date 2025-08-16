@@ -59,7 +59,7 @@ export class DestinationsService {
 
     like$(destId: string, uid: string): Observable<void> {
         const likeRef = doc(this.firestore, `${this.destinationsCollectionPath}/${destId}/likes/${uid}`);
-        return from(setDoc(likeRef, {liked: true}));
+        return from(setDoc(likeRef, { uid,liked: true}));
     }
 
     unlike$(destId: string, uid: string): Observable<void> {

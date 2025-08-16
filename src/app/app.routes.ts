@@ -45,7 +45,16 @@ export const routes: Routes = [
     },
     {
         path: 'collections',
-        loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
+        children: [
+            {
+                path: 'want-to-visit',
+                loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
+            },
+            {
+                path: 'added-by-you',
+                loadComponent: () => import('./features/collections/added-by-you/added-by-you').then(c => c.AddedByYou)
+            }
+        ]
     }
 
 ];
