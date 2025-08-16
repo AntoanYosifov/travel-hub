@@ -47,6 +47,10 @@ export const routes: Routes = [
         path: 'collections',
         children: [
             {
+              path: '',
+                loadComponent: () => import('./features/collections/user-collections/user-collections').then(c => c.UserCollections)
+            },
+            {
                 path: 'want-to-visit',
                 loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
             },
