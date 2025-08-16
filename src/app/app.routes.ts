@@ -53,6 +53,10 @@ export const routes: Routes = [
             {
                 path: 'added-by-you',
                 loadComponent: () => import('./features/collections/added-by-you/added-by-you').then(c => c.AddedByYou)
+            },
+            {
+                path: 'liked',
+                loadComponent: () => import('./features/collections/liked/liked').then(c => c.Liked)
             }
         ]
     }
