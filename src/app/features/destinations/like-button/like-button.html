@@ -3,7 +3,7 @@
         class="like-btn"
         [class.liked]="hasLiked$ | async"
         [attr.aria-pressed]="(hasLiked$ | async) ? 'true' : 'false'"
-        [disabled]="!uid"
+        [disabled]="!(uidPresent$ | async)"
         (click)="toggleLike()"
         title="Toggle like"
 >

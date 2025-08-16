@@ -17,12 +17,12 @@ export const routes: Routes = [
             {
                 path: '',
                 loadComponent:
-                    () => import('./features/destinations/destination-board/destination-board').then(c => c.DestinationBoard)
+                    () => import('./features/destinations/all-destinations/all-destinations').then(c => c.AllDestinations)
             },
             {
-              path: 'new',
-              loadComponent:
-                  () => import('./features/destinations/new-destination/new-destination').then(c => c.NewDestination)
+                path: 'new',
+                loadComponent:
+                    () => import('./features/destinations/new-destination/new-destination').then(c => c.NewDestination)
             },
             {
                 path: ':id',
@@ -42,6 +42,10 @@ export const routes: Routes = [
     {
         path: 'profile',
         loadComponent: () => import('./features/profile/profile').then(c => c.Profile)
+    },
+    {
+        path: 'collections',
+        loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
     }
 
 ];

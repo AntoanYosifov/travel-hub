@@ -19,14 +19,12 @@
         </figure>
 
         <div>
-            <span>Added by: </span> <p>{{ destination.authorName}}</p>
+            <span>Added by: </span>
+            <p>{{ destination.authorName }}</p>
 
-            @if(destination.id) {
-                <app-like-button
-                        [destId]="destination.id!"
-                        [uid]="profile()?.uid ?? null"
-                >
-                </app-like-button>
+            @if (destination.id) {
+                <app-like-button [destId]="destination.id!"></app-like-button>
+                <app-wtv-button [destination]="destination"></app-wtv-button>
             }
 
         </div>

@@ -7,6 +7,10 @@
         </div>
     </section>
 
-    <app-destination-board></app-destination-board>
+    <app-destination-board
+            [title]="'Latest Destinations'"
+            [emptyText]="'No destinations yet. Be the first to add one!'"
+            [destinations$]="destinations$">
+    </app-destination-board>
 
 </div>

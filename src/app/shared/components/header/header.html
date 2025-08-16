@@ -8,7 +8,7 @@
                     @if(isLoggedIn()) {
                         <li><a routerLink="/destinations">Destinations</a></li>
                         <li><a routerLink="/destinations/new">New Destination</a></li>
-                        <li><a routerLink="/profile">Profile</a></li>
+                        <li><a routerLink="/profile">{{ profile()?.displayName }}</a></li>
                         <li><button type="button" (click)="logout()">Logout</button></li>
                     } @else {
                         <li><a routerLink="/register">Register</a></li>

@@ -3,12 +3,14 @@ import {Destination} from "../../../models/destination.model";
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {LikeButton} from "../like-button/like-button";
+import {WtvButton} from "../wtv-button/wtv-button";
 
 @Component({
     selector: 'app-destination-item',
     imports: [
         RouterLink,
-        LikeButton
+        LikeButton,
+        WtvButton
     ],
     templateUrl: './destination-item.html',
     standalone: true,

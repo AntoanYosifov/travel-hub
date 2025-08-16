@@ -1,7 +1,8 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BehaviorSubject, combineLatest, of, switchMap, take} from "rxjs";
+import {Component, effect, inject, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {BehaviorSubject, combineLatest, map, of, switchMap, take} from "rxjs";
 import {DestinationsService} from "../../../core/services/destinations.service";
 import {AsyncPipe} from "@angular/common";
+import {AuthService} from "../../../core/services/auth.service";
 
 @Component({
     selector: 'app-like-button',
@@ -13,11 +14,16 @@ import {AsyncPipe} from "@angular/common";
     styleUrl: './like-button.css'
 })
 export class LikeButton implements OnChanges {
+
+    private authService = inject(AuthService);
+    private destService = inject(DestinationsService);
+
     @Input({required: true}) destId!: string;
-    @Input() uid: string | null = null;
 
     private destId$ = new BehaviorSubject<string | null>(null);
     private uid$ = new BehaviorSubject<string | null>(null);
+
+    uidPresent$ = this.uid$.pipe(map(uid => !!uid));
 
     likesCount$ = this.destId$.pipe(
         switchMap(id => id ? this.destService.likesCount$(id) : of(0))
@@ -27,15 +33,16 @@ export class LikeButton implements OnChanges {
         switchMap(([id, uid]) => (id && uid) ? this.destService.hasLiked$(id, uid) : of(false))
     );
 
-    constructor(private destService: DestinationsService) {
+    constructor() {
+        effect(() => {
+            const u = this.authService.userSignal();
+            this.uid$.next(u?.uid ?? null);
+        });
     }
 
     ngOnChanges(changes: SimpleChanges): void {
         if (changes['destId']) {
             this.destId$.next(this.destId ?? null);
-        }
-        if (changes['uid']) {
-            this.uid$.next(this.uid ?? null);
         }
     }
 

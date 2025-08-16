@@ -9,7 +9,8 @@ import {
 } from "@angular/fire/auth";
 import {doc, docData, DocumentReference, Firestore, setDoc} from "@angular/fire/firestore";
 import {UserModel, UserProfileDefaults} from "../../models/user.model";
-import {from, Observable, of, switchMap} from "rxjs";
+import {filter, from, map, Observable, of, switchMap} from "rxjs";
+import {toObservable} from "@angular/core/rxjs-interop";
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
@@ -100,4 +101,14 @@ export class AuthService {
     logout$(): Observable<void> {
         return from(signOut(this.auth));
     }
+
+    readonly user$ : Observable<FirebaseUser | null> = toObservable(this.userSignal);
+
+    readonly uidOptional$ = this.user$.pipe(map(u => u?.uid?? null));
+
+    readonly uidRequired$ = this.user$.pipe(
+        filter((u): u is FirebaseUser => !!u),
+        map(u => u.uid)
+    );
+
 }

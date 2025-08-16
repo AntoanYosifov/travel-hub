@@ -1,7 +1,15 @@
 <div class="container card destination-board">
-    @for (destination of destinations; track destination.id) {
-        <app-destination-item [destination]="destination"></app-destination-item>
+    @if (title) { <h3 class="board-title">{{ title }}</h3> }
+
+    @if (destinations$ | async; as list) {
+        @if (list.length) {
+            @for (destination of list; track destination.id) {
+                <app-destination-item [destination]="destination"></app-destination-item>
+            }
+        } @else {
+            <p class="empty">{{ emptyText }}</p>
+        }
+    } @else {
+        <p class="empty">Loading…</p>
     }
 </div>
-
-

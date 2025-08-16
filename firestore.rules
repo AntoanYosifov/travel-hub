@@ -28,6 +28,17 @@ service cloud.firestore {
 
          allow get, update, delete: if request.auth != null
                                          && request.auth.uid == uid;
+
+                match /wantToVisit/{destId} {
+                  allow read:   if request.auth != null && request.auth.uid == uid;
+                  allow create: if request.auth != null
+                                && request.auth.uid == uid
+                                && !exists(/databases/$(database)/documents/users/$(uid)/wantToVisit/$(destId));
+                  allow delete: if request.auth != null
+                                && request.auth.uid == uid
+                                && exists(/databases/$(database)/documents/users/$(uid)/wantToVisit/$(destId));
+                  allow update: if false;
+                }
     }
 
     match /{path=**} {

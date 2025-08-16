@@ -1,0 +1,14 @@
+<button
+        type="button"
+        class="like-btn"
+        [class.liked]="has$ | async"
+        [disabled]="!(uidPresent$ | async)"
+        (click)="toggle()"
+        aria-label="Toggle want to visit"
+>
+  <span class="icon" aria-hidden="true">
+    {{ (has$ | async) ? '📌' : '➕' }}
+  </span>
+    <span class="label">{{ (has$ | async) ? 'Saved' : 'Want to visit' }}</span>
+</button>
+
