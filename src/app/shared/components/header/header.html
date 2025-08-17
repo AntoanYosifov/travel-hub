@@ -4,9 +4,9 @@
         <nav class="main-nav">
             <ul>
                 <li><a routerLink="/home">Home</a></li>
+                <li><a routerLink="/destinations">Destinations</a></li>
                 @if(authResolved()) {
                     @if(isLoggedIn()) {
-                        <li><a routerLink="/destinations">Destinations</a></li>
                         <li><a routerLink="/collections">Collections</a></li>
                         <li><a routerLink="/destinations/new">New Destination</a></li>
                         <li><a routerLink="/profile">{{ profile()?.displayName }}</a></li>

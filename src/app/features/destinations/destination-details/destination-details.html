@@ -1,7 +1,7 @@
 <div class="details-container">
     <h4>Details</h4>
 
-    @if (destination) {
+    @if (destination$ | async; as destination) {
         <app-destination-item
                 [destination]="destination"
                 [showDetailsLink]="false"

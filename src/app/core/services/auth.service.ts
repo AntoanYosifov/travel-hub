@@ -1,43 +1,45 @@
-import {computed, Injectable, signal} from "@angular/core";
+import { computed, Injectable, signal } from '@angular/core';
 import {
     Auth,
     createUserWithEmailAndPassword,
     onAuthStateChanged,
     signInWithEmailAndPassword,
     signOut,
-    User as FirebaseUser
-} from "@angular/fire/auth";
-import {doc, docData, DocumentReference, Firestore, setDoc} from "@angular/fire/firestore";
-import {UserModel, UserProfileDefaults} from "../../models/user.model";
-import {filter, from, map, Observable, of, switchMap} from "rxjs";
-import {toObservable} from "@angular/core/rxjs-interop";
+    User as FirebaseUser,
+} from '@angular/fire/auth';
+import {
+    doc,
+    docData,
+    DocumentReference,
+    Firestore,
+    setDoc,
+} from '@angular/fire/firestore';
+import { UserModel, UserProfileDefaults } from '../../models/user.model';
+import { filter, from, map, Observable, of, switchMap } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class AuthService {
 
-    private _userSignal = signal<FirebaseUser | null>(null);
+    private _userSignal = signal<FirebaseUser | null | undefined>(undefined);
     readonly userSignal = this._userSignal.asReadonly();
 
     private _profileSignal = signal<UserModel | null>(null);
     readonly profileSignal = this._profileSignal.asReadonly();
 
+    // derived state
     readonly isLoggedIn = computed(() => !!this._userSignal());
-
-    private _authResolved = signal(false);
-    readonly authResolved = this._authResolved.asReadonly();
+    readonly authResolved = computed(() => this._userSignal() !== undefined);
 
     constructor(private auth: Auth, private firestore: Firestore) {
-        const authState$ =
-            new Observable<FirebaseUser | null>((subscriber) => {
-                const unsubscribe = onAuthStateChanged(
-                    this.auth,
-                    (user) => subscriber.next(user),
-                    (err) => subscriber.error(err)
-                );
-                return () => unsubscribe();
-            });
-
-        let first = true;
+        const authState$ = new Observable<FirebaseUser | null>((subscriber) => {
+            const unsubscribe = onAuthStateChanged(
+                this.auth,
+                (user) => subscriber.next(user),
+                (err) => subscriber.error(err)
+            );
+            return () => unsubscribe();
+        });
 
         authState$
             .pipe(
@@ -53,49 +55,39 @@ export class AuthService {
                         this.firestore,
                         `users/${user.uid}`
                     ) as DocumentReference<UserModel>;
-                    return docData<UserModel>(ref, {idField: "uid"}) as Observable<UserModel | null>
+                    return docData<UserModel>(ref, { idField: 'uid' }) as Observable<
+                        UserModel | null
+                    >;
                 })
             )
             .subscribe({
-                    next: (profile: UserModel | null) => {
-                        this._profileSignal.set(profile ?? null);
-                        if (first) {
-                            this._authResolved.set(true);
-                            first = false;
-                        }
-                    },
-                    error: (err) => {
-                        console.error("Auth pipe line error", err);
-                        if (first) {
-                            this._authResolved.set(true);
-                            first = false;
-                        }
-                    }
-                }
-            )
+                next: (profile) => this._profileSignal.set(profile ?? null),
+                error: (err) => console.error('Auth pipeline error', err),
+            });
     }
 
     register$(displayName: string, email: string, password: string): Observable<void> {
         return from(
-            createUserWithEmailAndPassword(this.auth, email, password)
-                .then(cred => {
-                    const uid = cred.user.uid;
+            createUserWithEmailAndPassword(this.auth, email, password).then((cred) => {
+                const uid = cred.user.uid;
 
-                    const profile: UserModel = {
-                        uid,
-                        displayName,
-                        email,
-                        ...UserProfileDefaults
-                    };
+                const profile: UserModel = {
+                    uid,
+                    displayName,
+                    email,
+                    ...UserProfileDefaults,
+                };
 
-                    const ref = doc(this.firestore, `users/${uid}`) as DocumentReference<UserModel>;
-                    return setDoc(ref, profile);
-                })
+                const ref = doc(this.firestore, `users/${uid}`) as DocumentReference<UserModel>;
+                return setDoc(ref, profile);
+            })
         );
     }
 
     login$(email: string, password: string): Observable<FirebaseUser> {
-        return from(signInWithEmailAndPassword(this.auth, email, password).then((cred) => cred.user));
+        return from(
+            signInWithEmailAndPassword(this.auth, email, password).then((cred) => cred.user)
+        );
     }
 
     logout$(): Observable<void> {
@@ -104,23 +96,21 @@ export class AuthService {
 
     updateDisplayName$(displayName: string): Observable<void> {
         const user = this._userSignal();
-
-        if(!user) {
-            throw new Error('Not authenticated');
-        }
+        if (!user) throw new Error('Not authenticated');
 
         const ref = doc(this.firestore, `users/${user.uid}`) as DocumentReference<UserModel>;
-
-        return from(setDoc(ref, {displayName}, {merge: true}));
+        return from(setDoc(ref, { displayName }, { merge: true }));
     }
 
-    readonly user$ : Observable<FirebaseUser | null> = toObservable(this.userSignal);
+    // Keep the same public streams. Map 'undefined' -> null so no external types change.
+    readonly user$: Observable<FirebaseUser | null> = toObservable(this.userSignal).pipe(
+        map((u) => u ?? null)
+    );
 
-    readonly uidOptional$ = this.user$.pipe(map(u => u?.uid?? null));
+    readonly uidOptional$ = this.user$.pipe(map((u) => u?.uid ?? null));
 
     readonly uidRequired$ = this.user$.pipe(
         filter((u): u is FirebaseUser => !!u),
-        map(u => u.uid)
+        map((u) => u.uid)
     );
-
 }

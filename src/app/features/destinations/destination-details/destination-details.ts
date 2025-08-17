@@ -1,48 +1,28 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {DestinationItem} from "../destination-item/destination-item";
-import {Subscription} from "rxjs";
+import {filter, map, Observable, Subscription, switchMap} from "rxjs";
 import {Destination} from "../../../models/destination.model";
 import {ActivatedRoute} from "@angular/router";
 import {DestinationsService} from "../../../core/services/destinations.service";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
     selector: 'app-destination-details',
-    imports: [DestinationItem],
+    imports: [DestinationItem, AsyncPipe],
     templateUrl: './destination-details.html',
     standalone: true,
     styleUrl: './destination-details.css'
 })
-export class DestinationDetails implements OnInit, OnDestroy {
-    destination?: Destination;
-    private routeSub?: Subscription;
-    private dataSub?: Subscription;
+export class DestinationDetails  {
 
-    constructor(private route: ActivatedRoute,
-                private destinationService: DestinationsService) {
-    }
+    private route = inject(ActivatedRoute);
+    private destinationService = inject(DestinationsService);
 
-
-    ngOnInit(): void {
-        this.routeSub = this.route.paramMap.subscribe(pm => {
-            const id = pm.get('id');
-
-            if (!id) {
-                return
-            }
-
-            this.dataSub?.unsubscribe();
-            this.destination = undefined;
-
-            this.dataSub = this.destinationService.getDestinationById(id)
-                .subscribe(dest => {
-                    this.destination = dest ?? undefined;
-                })
-        })
-    }
-
-    ngOnDestroy(): void {
-        this.routeSub?.unsubscribe();
-        this.dataSub?.unsubscribe();
-    }
+    readonly destination$: Observable<Destination | undefined> =
+        this.route.paramMap.pipe(
+            map(pm => pm.get('id')),
+            filter((id): id is string => !!id),
+            switchMap(id => this.destinationService.getDestinationById(id))
+        );
 
 }
