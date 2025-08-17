@@ -1,4 +1,5 @@
-<div class="wrapper" [class.detail]="variant === 'detail'">
+<div class="wrapper" [class.detail]="variant === 'detail'"
+     [class.compact]="compact">
     <div class="grid-container">
         <div class="description">
             <header class="destination-header">
@@ -12,7 +13,9 @@
 
         <figure class="destination-image">
             <div class="img-wrapper">
-                <img [src]="destination.imgUrl" alt="Photo of the destination" />
+                <img
+                        [src]="destination.imgUrl"
+                        alt="Photo of the destination" />
             </div>
             <figcaption>{{ destination.photoCredit }}</figcaption>
         </figure>
@@ -32,7 +35,9 @@
 
     @if (showDetailsLink) {
         <section class="destination-description">
-            <a [routerLink]="['/destinations', destination.id]" class="btn">Details</a>
+            <a [routerLink]="['/destinations', destination.id]" class="btn">
+                Details
+            </a>
         </section>
     }
 </div>

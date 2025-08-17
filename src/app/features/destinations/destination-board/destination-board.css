@@ -1,11 +1,12 @@
 .destination-board{
-    max-width: min(980px, 94vw);                                 /* narrower overall */
+    max-width: min(1150px, 94vw);
     margin: 0 auto;
     padding: 0 1rem 1.25rem;
 
     display: grid;
-    gap: .9rem;                                                  /* tighter spacing */
-    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); /* smaller cards */
+    gap: .9rem;
+    /* smaller columns so at least 2 full cards fit comfortably */
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
 
 .board-title{
@@ -22,14 +23,4 @@
     border: 1px dashed var(--border);
     border-radius: 10px;
     background: rgba(22,27,34,.35);
-}
-
-.destination-board .wrapper{ padding: .7rem; border-radius: 10px; }
-.destination-board .img-wrapper{ aspect-ratio: 16 / 9; }       /* shorter images */
-.destination-board .description p{ -webkit-line-clamp: 2; }     /* shorter teaser */
-.destination-board .meta{ margin-top: .5rem; }
-.destination-board .actions .like-btn,
-.destination-board .actions .wtv-btn{
-    padding: .35rem .6rem;
-    font-size: .8rem;
 }

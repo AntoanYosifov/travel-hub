@@ -20,6 +20,7 @@ export class DestinationItem {
     @Input({required: true}) destination!: Destination;
     @Input() showDetailsLink = true;
     @Input() variant: 'card' | 'detail' = 'card';
+    @Input() compact = false;
 
     private authService = inject(AuthService);
 

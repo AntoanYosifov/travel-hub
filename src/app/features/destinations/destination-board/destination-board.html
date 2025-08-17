@@ -4,7 +4,11 @@
     @if (destinations$ | async; as list) {
         @if (list.length) {
             @for (destination of list; track destination.id) {
-                <app-destination-item [destination]="destination"></app-destination-item>
+                <app-destination-item
+                        [destination]="destination"
+                        variant="card"
+                        [compact]="true">
+                </app-destination-item>
             }
         } @else {
             <p class="empty">{{ emptyText }}</p>
