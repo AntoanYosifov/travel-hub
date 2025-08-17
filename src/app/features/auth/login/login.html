@@ -1,39 +1,45 @@
-<div class="card outer-container">
+<div class="card outer-container auth-card">
     <div class="inner-container">
-        <h4>Login</h4>
-        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-            <div>
-                <label for="email">Email</label><br/>
-                <input [class.input-error]="isEmailNotValid" id="email"
-                       formControlName="email"
-                       type="email"/>
+        <h4 class="auth-title">Login</h4>
+
+        <form class="form-stack" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="form-row">
+                <label for="email">Email</label>
+                <input
+                        id="email"
+                        type="email"
+                        formControlName="email"
+                        [class.input-error]="isEmailNotValid"
+                        placeholder="you@example.com"
+                />
                 @if (isEmailNotValid) {
-                    <p class="error">
-                        {{ emailErrorMessage }}
-                    </p>
+                    <p class="error">{{ emailErrorMessage }}</p>
                 }
             </div>
 
-            <div>
-                <label for="password">Password</label><br/>
-                <input [class.input-error]="isPasswordNotValid" id="password"
-                       formControlName="password"
-                       type="password"/>
+            <div class="form-row">
+                <label for="password">Password</label>
+                <input
+                        id="password"
+                        type="password"
+                        formControlName="password"
+                        [class.input-error]="isPasswordNotValid"
+                        placeholder="••••••••"
+                />
                 @if (isPasswordNotValid) {
                     <p class="error">{{ passwordErrorMessage }}</p>
                 }
             </div>
 
-            @if(error) {
-                <div><p class="error" >{{ error }}</p></div>
+            @if (error) {
+                <div class="form-row">
+                    <p class="error">{{ error }}</p>
+                </div>
             }
 
-            <button type="submit" [disabled]="loginForm.invalid">
+            <button class="btn-accent" type="submit" [disabled]="loginForm.invalid">
                 Login
             </button>
-
         </form>
     </div>
 </div>
-
-

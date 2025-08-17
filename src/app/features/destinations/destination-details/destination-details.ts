@@ -1,6 +1,6 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {DestinationItem} from "../destination-item/destination-item";
-import {filter, map, Observable, Subscription, switchMap} from "rxjs";
+import {filter, map, Observable, switchMap} from "rxjs";
 import {Destination} from "../../../models/destination.model";
 import {ActivatedRoute} from "@angular/router";
 import {DestinationsService} from "../../../core/services/destinations.service";
