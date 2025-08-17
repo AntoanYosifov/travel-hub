@@ -70,7 +70,7 @@
     line-height:1;
 }
 
-/* state cards (not logged in / loading) */
+/* state cards */
 .profile-state{
     margin: 1rem;
     padding: 1.25rem;
@@ -82,4 +82,104 @@
 }
 
 /* keep old spacing rule, but scoped */
-.inner-container *{ margin-bottom: 0; }  /* we control spacing via .kv-row now */
+.inner-container *{ margin-bottom: 0; }  /* control spacing via .kv-row */
+
+/* ---------- Buttons ---------- */
+.btn{
+    --h: 38px;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.5rem;
+    height: var(--h);
+    padding: 0 .95rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--bg-elev);
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1;
+    cursor: pointer;
+    transition: transform .06s ease, box-shadow .15s ease, background .15s ease, border-color .15s ease;
+}
+.btn:hover{ border-color: #3b4450; background:#1b2230; }
+.btn:active{ transform: translateY(1px); }
+.btn:disabled{ opacity:.55; cursor:not-allowed; }
+
+.btn--sm{ --h: 32px; padding: 0 .7rem; font-size:.92rem; }
+
+/* variants */
+.btn-outline{
+    background: transparent;
+    border-color: var(--border);
+    color: var(--text);
+}
+.btn-outline:hover{
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88,166,255,.15);
+}
+
+.btn-neutral{
+    background: var(--bg-elev);
+    border-color: var(--border);
+}
+.btn-neutral:hover{
+    border-color: #3b4450;
+    background:#1b2230;
+}
+
+.btn-accent{
+    background: #1f6feb;
+    border-color: #316dca;
+    color:#fff;
+    box-shadow: 0 6px 18px rgba(31,111,235,.25);
+}
+.btn-accent:hover{
+    box-shadow: 0 8px 22px rgba(31,111,235,.35);
+    filter: brightness(1.03);
+}
+
+/* ---------- Edit state ---------- */
+.edit-form{
+    margin-top: .75rem;
+    padding: .9rem;
+    border: 1px dashed var(--border);
+    border-radius: 12px;
+    background: linear-gradient(180deg, rgba(88,166,255,.06), transparent 120%);
+}
+.edit-form .kv-row{ margin-bottom: .8rem; }
+.field-col{ flex: 1 1 auto; }
+
+/* inputs */
+.edit-form input{
+    width: 100%;
+    background: var(--bg-elev);
+    color: var(--text);
+    border:1px solid var(--border);
+    border-radius: 10px;
+    padding:.55rem .7rem;
+}
+.edit-form input:focus{
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(88,166,255,.15);
+}
+
+/* validation */
+.input-error{
+    border-color:#f85149 !important;
+    box-shadow: 0 0 0 3px rgba(248,81,73,.12);
+}
+.error{
+    color:#f85149;
+    font-size:.85rem;
+    margin-top:.35rem;
+}
+
+/* action row */
+.actions{
+    margin-top: .6rem;
+    display:flex;
+    gap:.6rem;
+    justify-content:flex-end;
+}

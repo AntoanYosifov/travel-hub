@@ -102,6 +102,18 @@ export class AuthService {
         return from(signOut(this.auth));
     }
 
+    updateDisplayName$(displayName: string): Observable<void> {
+        const user = this._userSignal();
+
+        if(!user) {
+            throw new Error('Not authenticated');
+        }
+
+        const ref = doc(this.firestore, `users/${user.uid}`) as DocumentReference<UserModel>;
+
+        return from(setDoc(ref, {displayName}, {merge: true}));
+    }
+
     readonly user$ : Observable<FirebaseUser | null> = toObservable(this.userSignal);
 
     readonly uidOptional$ = this.user$.pipe(map(u => u?.uid?? null));

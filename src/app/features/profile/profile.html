@@ -4,15 +4,45 @@
             <div class="inner-container">
                 <h2 class="profile-title">My profile</h2>
 
-                <div class="kv-row">
-                    <label class="key">Name:</label>
-                    <span class="val badge">{{ profile()?.displayName }}</span>
-                </div>
+                @if (!isEdit) {
+                    <div class="kv-row">
+                        <label class="key">Name:</label>
+                        <span class="val badge">{{ profile()?.displayName }}</span>
+                    </div>
 
-                <div class="kv-row">
-                    <label class="key">Email:</label>
-                    <span class="val badge">{{ profile()?.email }}</span>
-                </div>
+                    <div class="kv-row">
+                        <label class="key">Email:</label>
+                        <span class="val badge">{{ profile()?.email }}</span>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" class="btn btn-outline btn--sm" (click)="startEdit()">Edit name</button>
+                    </div>
+                }
+
+                @if (isEdit) {
+                    <form (ngSubmit)="save()" [formGroup]="form" class="edit-form">
+                        <div class="kv-row">
+                            <label class="key" for="displayName">Name:</label>
+                            <div class="field-col">
+                                <input
+                                        id="displayName"
+                                        formControlName="displayName"
+                                        [class.input-error]="nameInvalid"
+                                        placeholder="Your display name"
+                                />
+                                @if (nameInvalid) {
+                                    <p class="error">Name must be at least 5 characters.</p>
+                                }
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button type="button" class="btn btn-neutral" (click)="cancelEdit()">Cancel</button>
+                            <button type="submit" class="btn btn-accent" [disabled]="form.invalid">Save</button>
+                        </div>
+                    </form>
+                }
             </div>
         } @else {
             <div class="card profile-state">
