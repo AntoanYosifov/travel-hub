@@ -19,6 +19,7 @@ import {WtvButton} from "../wtv-button/wtv-button";
 export class DestinationItem {
     @Input({required: true}) destination!: Destination;
     @Input() showDetailsLink = true;
+    @Input() variant: 'card' | 'detail' = 'card';
 
     private authService = inject(AuthService);
 

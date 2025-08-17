@@ -1,29 +1,30 @@
-<div class="new-destination card outer-container">
+<div class="new-destination card outer-container form-card">
     <div class="inner-container">
-        <h4>Add New Destination</h4>
+        <h4 class="form-title">Add New Destination</h4>
 
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form class="form-grid" [formGroup]="form" (ngSubmit)="onSubmit()">
             <div class="form-group">
                 <label for="locationName">Location Name</label>
                 <input
+                        [class.input-error]="isLocationNameNotValid"
                         type="text"
                         id="locationName"
                         formControlName="locationName"
                         placeholder="e.g. Paris"
                 />
+                @if (isLocationNameNotValid) {
+                    <p class="error">{{ locationNameErrorMessage }}</p>
+                }
             </div>
 
-            <div class="form-group">
+            <div class="form-group span-2">
                 <label for="description">Describe your exp...</label>
-                <textarea    type="text"
-                             id="description"
-                             formControlName="description"
-                             placeholder="Say something about this place..."
-                             rows="4"
-                             cols="20"
-                >
-                </textarea>
-
+                <textarea
+                        id="description"
+                        formControlName="description"
+                        placeholder="Say something about this place..."
+                        rows="6"
+                ></textarea>
             </div>
 
             <div class="form-group">
@@ -45,8 +46,12 @@
                         placeholder="© Photographer Name"
                 />
             </div>
-            <button type="submit" [disabled]="form.invalid">Save Destination</button>
+
+            <div class="actions">
+                <button class="btn-accent" type="submit" [disabled]="form.invalid">
+                    Save Destination
+                </button>
+            </div>
         </form>
     </div>
 </div>
-

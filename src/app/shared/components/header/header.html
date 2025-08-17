@@ -7,6 +7,7 @@
                 @if(authResolved()) {
                     @if(isLoggedIn()) {
                         <li><a routerLink="/destinations">Destinations</a></li>
+                        <li><a routerLink="/collections">Collections</a></li>
                         <li><a routerLink="/destinations/new">New Destination</a></li>
                         <li><a routerLink="/profile">{{ profile()?.displayName }}</a></li>
                         <li><button type="button" (click)="logout()">Logout</button></li>

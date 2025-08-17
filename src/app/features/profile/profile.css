@@ -1,16 +1,85 @@
+:root{
+    --bg-card:#0d1117;
+    --bg-elev:#161b22;
+    --border:#30363d;
+    --text:#c9d1d9;
+    --muted:#8b949e;
+    --accent:#58a6ff;
+}
 
-.outer-container {
+/* center the card */
+.outer-container{
     margin: 0 auto;
-    max-width: 30%;
-    display: flex;
-    justify-content: center;
+    max-width: min(640px, 94vw);
+    padding: 2rem 1rem 3rem;
+    display:flex;
+    justify-content:center;
 }
 
-.inner-container * {
-    margin-bottom: 1em;
+/* card shell */
+.profile-card{
+    width: 100%;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.35);
+}
+.inner-container{ padding: 1.25rem; }
+
+/* title */
+.profile-title{
+    margin: 0 0 1rem;
+    font-size: clamp(1.2rem, .8vw + 1rem, 1.6rem);
+    color: var(--text);
+    position: relative;
+}
+.profile-title::after{
+    content:"";
+    display:block;
+    height:2px;
+    width:72px;
+    margin-top:.5rem;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius:2px;
 }
 
-label {
-    margin-right: 1em;
+/* rows */
+.kv-row{
+    display:flex;
+    align-items:center;
+    gap:.75rem;
+    margin-bottom: .9rem;
+}
+.profile-card .key{
+    color: var(--muted);
+    font-weight: 600;
+    min-width: 90px;
+}
+.profile-card .val{ color: var(--text); }
+
+/* badge for values */
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:.4rem;
+    padding:.35rem .6rem;
+    background: var(--bg-elev);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size:.92rem;
+    line-height:1;
 }
 
+/* state cards (not logged in / loading) */
+.profile-state{
+    margin: 1rem;
+    padding: 1.25rem;
+    background: var(--bg-card);
+    border: 1px dashed var(--border);
+    border-radius: 14px;
+    text-align: center;
+    color: var(--muted);
+}
+
+/* keep old spacing rule, but scoped */
+.inner-container *{ margin-bottom: 0; }  /* we control spacing via .kv-row now */

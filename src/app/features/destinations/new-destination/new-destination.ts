@@ -1,5 +1,5 @@
 import {Component, Signal} from '@angular/core';
-import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {DestinationsService} from "../../../core/services/destinations.service";
 import {Router} from "@angular/router";
 import {Destination} from "../../../models/destination.model";
@@ -29,12 +29,30 @@ export class NewDestination {
 
         this.form = this.formBuilder.group(
             {
-                locationName: ['', Validators.required],
+                locationName: ['', [Validators.required, Validators.minLength(4)]],
                 description: ['', Validators.required],
                 imgUrl: ['', Validators.required],
                 photoCredit: ['']
             }
         )
+    }
+
+    get locationName(): AbstractControl<any, any> | null {
+        return this.form.get('locationName');
+    }
+
+    get isLocationNameNotValid(): boolean {
+        return this.locationName?.invalid && (this.locationName?.dirty || this.locationName?.touched) || false;
+    }
+
+    get locationNameErrorMessage(): string {
+        if (this.locationName?.errors?.['required']) {
+            return 'Location name is required!';
+        }
+        if (this.locationName?.errors?.['minlength']) {
+            return 'Minimum of 4 characters!';
+        }
+        return '';
     }
 
     onSubmit(): void {

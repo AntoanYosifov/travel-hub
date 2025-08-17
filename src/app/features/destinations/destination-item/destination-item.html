@@ -1,41 +1,38 @@
-<div class="wrapper">
-    <div class="flex-container">
+<div class="wrapper" [class.detail]="variant === 'detail'">
+    <div class="grid-container">
         <div class="description">
             <header class="destination-header">
                 <h5 class="location-name">{{ destination.locationName }}</h5>
             </header>
 
             <div>
-                <p> {{ destination.description }} </p>
+                <p>{{ destination.description }}</p>
             </div>
         </div>
 
         <figure class="destination-image">
             <div class="img-wrapper">
-                <img [src]="destination.imgUrl"
-                     alt="Photo of the destination"/>
+                <img [src]="destination.imgUrl" alt="Photo of the destination" />
             </div>
             <figcaption>{{ destination.photoCredit }}</figcaption>
         </figure>
 
-        <div>
-            <span>Added by: </span>
-            <p>{{ destination.authorName }}</p>
+        <div class="meta">
+            <span class="author">Added by:</span>
+            <span class="badge">{{ destination.authorName }}</span>
 
             @if (destination.id) {
-                <app-like-button [destId]="destination.id!"></app-like-button>
-                <app-wtv-button [destination]="destination"></app-wtv-button>
+                <div class="actions">
+                    <app-like-button [destId]="destination.id!"></app-like-button>
+                    <app-wtv-button  [destination]="destination"></app-wtv-button>
+                </div>
             }
-
         </div>
     </div>
 
     @if (showDetailsLink) {
         <section class="destination-description">
-            <a [routerLink]="['/destinations', destination.id]" class="btn">
-                Details
-            </a>
+            <a [routerLink]="['/destinations', destination.id]" class="btn">Details</a>
         </section>
     }
-
 </div>

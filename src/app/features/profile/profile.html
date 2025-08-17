@@ -1,30 +1,27 @@
-
-
-<div class="card outer-container">
-    @if(authResolved()) {
-        @if(isLoggedIn()){
+<div class="card outer-container profile-card">
+    @if (authResolved()) {
+        @if (isLoggedIn()) {
             <div class="inner-container">
-                <h2>My profile</h2>
+                <h2 class="profile-title">My profile</h2>
 
-                <div>
-                    <label>Name:</label>
-                    <span>{{profile()?.displayName}}</span>
+                <div class="kv-row">
+                    <label class="key">Name:</label>
+                    <span class="val badge">{{ profile()?.displayName }}</span>
                 </div>
 
-                <div>
-                    <label>Email:</label>
-                    <span>{{profile()?.email}}</span>
+                <div class="kv-row">
+                    <label class="key">Email:</label>
+                    <span class="val badge">{{ profile()?.email }}</span>
                 </div>
-
             </div>
         } @else {
-            <div class="card">
+            <div class="card profile-state">
                 <h3>You’re not logged in</h3>
                 <p>Please sign in to view your profile.</p>
             </div>
         }
     } @else {
-        <div class="card">
+        <div class="card profile-state">
             <p>Loading your profile…</p>
         </div>
     }

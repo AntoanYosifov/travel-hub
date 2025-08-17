@@ -1,15 +1,35 @@
-/** {*/
-/*    border: 1px solid red;*/
-/*}*/
-
-.destination-board {
-    max-width: 50em;
+.destination-board{
+    max-width: min(980px, 94vw);                                 /* narrower overall */
     margin: 0 auto;
-    display: flex;
-    gap: 2em;
-    flex-wrap: wrap;
+    padding: 0 1rem 1.25rem;
+
+    display: grid;
+    gap: .9rem;                                                  /* tighter spacing */
+    grid-template-columns: repeat(auto-fit, minmax(420px, 1fr)); /* smaller cards */
 }
 
-.destination-board > * {
-    flex: 1 1 0;
+.board-title{
+    grid-column: 1 / -1;
+    margin: 0 0 .75rem;
+    font-size: clamp(1.15rem, .7vw + 1rem, 1.5rem);
+}
+
+.empty{
+    grid-column: 1 / -1;
+    text-align: center;
+    color: var(--muted);
+    padding: 1rem;
+    border: 1px dashed var(--border);
+    border-radius: 10px;
+    background: rgba(22,27,34,.35);
+}
+
+.destination-board .wrapper{ padding: .7rem; border-radius: 10px; }
+.destination-board .img-wrapper{ aspect-ratio: 16 / 9; }       /* shorter images */
+.destination-board .description p{ -webkit-line-clamp: 2; }     /* shorter teaser */
+.destination-board .meta{ margin-top: .5rem; }
+.destination-board .actions .like-btn,
+.destination-board .actions .wtv-btn{
+    padding: .35rem .6rem;
+    font-size: .8rem;
 }

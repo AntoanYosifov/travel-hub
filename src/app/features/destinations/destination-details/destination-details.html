@@ -1,7 +1,11 @@
-<div class="container">
+<div class="details-container">
     <h4>Details</h4>
-    @if(destination) {
-        <app-destination-item [destination]="destination" [showDetailsLink]="false"></app-destination-item>
+
+    @if (destination) {
+        <app-destination-item
+                [destination]="destination"
+                [showDetailsLink]="false"
+                variant="detail">
+        </app-destination-item>
     }
 </div>
-
