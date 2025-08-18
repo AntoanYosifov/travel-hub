@@ -3,14 +3,33 @@
         <div class="container">
             <h2>Welcome to TravelHub</h2>
             <p>Share your adventures and discover new destinations.</p>
-            <a class="btn" href="#">Get Started</a>
         </div>
     </section>
 
     <app-destination-board
-            [title]="'Latest Destinations'"
+            [title]="'A glimpse...'"
             [emptyText]="'No destinations yet. Be the first to add one!'"
-            [destinations$]="destinations$">
+            [destinations$]="destinationsLimited$">
     </app-destination-board>
+
+    <section class="preview-note ">
+        @if (authResolved()) {
+            @if (isLoggedIn()) {
+                <div class="cta-row">
+                    <a routerLink="/destinations" class="btn btn-accent">Explore all destinations</a>
+                    <a routerLink="/collections"  class="btn btn-neutral">My collections</a>
+                </div>
+            } @else {
+                <p class="preview-text">
+                    To see the details of a particular destination, explore all destinations, like places, and save them to your collections and share your own adventures,
+                    please Log in or Create an Account.
+                </p>
+                <div class="cta-row">
+                    <a routerLink="/login"    class="btn btn-accent">Log in</a>
+                    <a routerLink="/register" class="btn btn-outline">Create account</a>
+                </div>
+            }
+        }
+    </section>
 
 </div>

@@ -19,6 +19,13 @@ import {AuthService} from "../../../core/services/auth.service";
     styleUrl: './register.css'
 })
 export class Register {
+
+    private readonly firebaseErrorMessages: Record<string, string> = {
+        'auth/email-already-in-use': 'An account with this email already exists.',
+        'auth/invalid-email': 'Please enter a valid email address.',
+        'auth/weak-password': 'Password should be at least 6 characters.'
+    };
+
     registerForm: FormGroup;
     error: string | null = null;
 
@@ -149,6 +156,8 @@ export class Register {
                 error: err => {
                     this.error = err.message ?? 'Failed to register';
                     console.error(this.error);
+                    this.error = this.firebaseErrorMessages[err.code] || 'Failed to register!';
+                    this.passwords.reset();
                 }
             }
         )
