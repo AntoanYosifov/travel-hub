@@ -1,6 +1,7 @@
 {
   "projects": {
-    "dev": "travelhub-23b2e"
+    "dev": "travelhub-23b2e",
+    "default": "travelhub-23b2e"
   },
   "targets": {},
   "etags": {}

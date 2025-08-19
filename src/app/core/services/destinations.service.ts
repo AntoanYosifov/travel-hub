@@ -11,7 +11,8 @@ import {
     query,
     where,
     documentId,
-    Firestore, setDoc
+    Firestore, setDoc,
+    updateDoc
 } from "@angular/fire/firestore";
 import {from, map, Observable} from "rxjs";
 import {Destination} from "../../models/destination.model";
@@ -44,6 +45,16 @@ export class DestinationsService {
                 ...data
             }))
         );
+    }
+
+    updateDescription$(id: string, description: string) {
+        const ref = doc(this.firestore, `destinations/${id}`);
+        return from(updateDoc(ref, { description })).pipe(map(() => void 0));
+    }
+
+    deleteDestination$(id: string): Observable<void> {
+        const ref = doc(this.firestore, `destinations/${id}`);
+        return from(deleteDoc(ref)).pipe(map(() => void 0));
     }
 
     hasLiked$(destId: string, uid: string): Observable<boolean> {

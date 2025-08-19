@@ -7,5 +7,25 @@
                 [showDetailsLink]="false"
                 variant="detail">
         </app-destination-item>
+
+        @if(destination?.authorId === profile()?.uid) {
+            @if (!editing) {
+                <div class="owner-actions">
+                    <button class="btn" type="button" (click)="startEdit(destination.description)">Edit description</button>
+                    <button class="btn danger" type="button" (click)="onDelete(destination.id)">Delete</button>
+                </div>
+            } @else {
+                <div class="edit-box">
+                    <label for="descEdit">Edit description</label>
+                    <textarea id="descEdit" [(ngModel)]="draftDescription" rows="6"></textarea>
+                    <div class="actions">
+                        <button class="btn btn-neutral" type="button" (click)="cancelEdit()">Cancel</button>
+                        <button class="btn btn-accent" type="button" (click)="saveDescription(destination.id)">Save</button>
+                    </div>
+                </div>
+            }
+        }
+    } @else {
+        <p class="muted">Loading...</p>
     }
 </div>
