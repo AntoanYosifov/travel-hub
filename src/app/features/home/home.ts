@@ -1,10 +1,11 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {DestinationBoard} from "../destinations/destination-board/destination-board";
 import {DestinationsService} from "../../core/services/destinations.service";
 import {map, Observable} from "rxjs";
 import {Destination} from "../../models/destination.model";
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../../core/services/auth.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-home',
@@ -16,7 +17,13 @@ import {AuthService} from "../../core/services/auth.service";
     standalone: true,
     styleUrl: './home.css'
 })
-export class Home {
+export class Home implements OnInit{
+
+    constructor(private title: Title) {}
+
+    ngOnInit(): void {
+        this.title.setTitle('TravelHub — Home');
+    }
 
     private auth = inject(AuthService);
     private destinationsService = inject(DestinationsService)

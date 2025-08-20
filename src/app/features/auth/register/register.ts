@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
     AbstractControl,
     FormBuilder,
@@ -10,6 +10,7 @@ import {
 } from "@angular/forms";
 import {Router} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-register',
@@ -18,7 +19,7 @@ import {AuthService} from "../../../core/services/auth.service";
     standalone: true,
     styleUrl: './register.css'
 })
-export class Register {
+export class Register implements OnInit{
 
     private readonly firebaseErrorMessages: Record<string, string> = {
         'auth/email-already-in-use': 'An account with this email already exists.',
@@ -29,7 +30,7 @@ export class Register {
     registerForm: FormGroup;
     error: string | null = null;
 
-    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder,private title: Title) {
         this.registerForm = this.formBuilder.group(
             {
                 displayName: ['', [Validators.required, Validators.minLength(5)]],
@@ -40,6 +41,10 @@ export class Register {
                 }, {validators: this.passwordMatchValidator})
             }
         )
+    }
+
+    ngOnInit(): void {
+        this.title.setTitle('Register');
     }
 
     get displayName(): AbstractControl<any, any> | null {

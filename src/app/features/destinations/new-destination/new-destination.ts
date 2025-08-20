@@ -1,10 +1,11 @@
-import {Component, Signal} from '@angular/core';
+import {Component, OnInit, Signal} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {DestinationsService} from "../../../core/services/destinations.service";
 import {Router} from "@angular/router";
 import {Destination} from "../../../models/destination.model";
 import {AuthService} from "../../../core/services/auth.service";
 import {UserModel} from "../../../models/user.model";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-new-destination',
@@ -15,7 +16,7 @@ import {UserModel} from "../../../models/user.model";
     standalone: true,
     styleUrl: './new-destination.css'
 })
-export class NewDestination {
+export class NewDestination implements OnInit{
 
     form: FormGroup;
     readonly profile: Signal<UserModel | null>;
@@ -23,7 +24,8 @@ export class NewDestination {
     constructor(private formBuilder: FormBuilder,
                 private destinationService: DestinationsService,
                 private router: Router,
-                private authService: AuthService) {
+                private authService: AuthService,
+                private title: Title) {
 
         this.profile = this.authService.profileSignal;
 
@@ -35,6 +37,11 @@ export class NewDestination {
                 photoCredit: ['']
             }
         )
+    }
+
+
+    ngOnInit(): void {
+        this.title.setTitle('New Destination');
     }
 
     get locationName(): AbstractControl<any, any> | null {

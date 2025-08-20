@@ -1,8 +1,9 @@
-import {Component, computed, effect, inject, OnInit, Signal} from '@angular/core';
+import {Component, effect, OnInit, Signal} from '@angular/core';
 import {AuthService} from "../../core/services/auth.service";
 import {Router} from "@angular/router";
 import {UserModel} from "../../models/user.model";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
   standalone: true,
   styleUrl: './profile.css'
 })
-export class Profile{
+export class Profile implements OnInit{
     form: FormGroup;
 
     readonly authResolved: Signal<boolean>;
@@ -21,7 +22,7 @@ export class Profile{
     readonly profile: Signal<UserModel | null>;
 
     isEdit = false
-    constructor(private authService: AuthService, private router: Router, private formBuilder : FormBuilder) {
+    constructor(private authService: AuthService, private router: Router, private formBuilder : FormBuilder, private title: Title) {
             this.authResolved = this.authService.authResolved;
             this.isLoggedIn = this.authService.isLoggedIn;
             this.profile = this.authService.profileSignal;
@@ -41,6 +42,10 @@ export class Profile{
                 this.form.patchValue({displayName: p.displayName ?? ''}, {emitEvent: false})
             }
         });
+    }
+
+    ngOnInit(): void {
+        this.title.setTitle('Profile');
     }
 
     startEdit() {

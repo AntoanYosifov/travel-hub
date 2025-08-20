@@ -14,7 +14,6 @@ export const routes: Routes = [
     },
     {
         path: 'destinations',
-        canMatch: [authGuard] ,
         children: [
             {
                 path: '',
@@ -23,6 +22,7 @@ export const routes: Routes = [
             },
             {
                 path: 'new',
+                canMatch: [authGuard],
                 loadComponent:
                     () => import('./features/destinations/new-destination/new-destination').then(c => c.NewDestination)
             },
@@ -49,22 +49,19 @@ export const routes: Routes = [
         loadComponent: () => import('./features/profile/profile').then(c => c.Profile)
     },
     {
-        path: 'collections',
+        path: 'collections/want-to-visit',
         canMatch: [authGuard],
-        children: [
-            {
-                path: 'want-to-visit',
-                loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
-            },
-            {
-                path: 'added-by-you',
-                loadComponent: () => import('./features/collections/added-by-you/added-by-you').then(c => c.AddedByYou)
-            },
-            {
-                path: 'liked',
-                loadComponent: () => import('./features/collections/liked/liked').then(c => c.Liked)
-            }
-        ]
-    }
+        loadComponent: () => import('./features/collections/want-to-visit/want-to-visit').then(c => c.WantToVisit)
+    },
+    {
+        path: 'collections/added-by-you',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/collections/added-by-you/added-by-you').then(c => c.AddedByYou)
+    },
+    {
+        path: 'collections/liked',
+        canMatch: [authGuard],
+        loadComponent: () => import('./features/collections/liked/liked').then(c => c.Liked)
+    },
 
 ];

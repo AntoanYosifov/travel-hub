@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {AuthService} from "../../../core/services/auth.service";
 import {Router} from "@angular/router";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-login',
@@ -12,7 +13,7 @@ import {Router} from "@angular/router";
     standalone: true,
     styleUrl: './login.css'
 })
-export class Login {
+export class Login implements OnInit{
     loginForm: FormGroup;
     error: string | null = null;
 
@@ -22,7 +23,7 @@ export class Login {
         'auth/too-many-requests': 'Too many failed attempts. Please try again later.'
     };
 
-    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder) {
+    constructor(private authService: AuthService, private router: Router, private formBuilder: FormBuilder, private title: Title) {
         this.loginForm = this.formBuilder.group(
             {
                 email: ['', [Validators.required, Validators.pattern(/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/)]],
@@ -30,6 +31,10 @@ export class Login {
             }
         )
     }
+    ngOnInit(): void {
+        this.title.setTitle('Login');
+    }
+
 
     get email(): AbstractControl<any, any> | null {
         return this.loginForm.get('email');

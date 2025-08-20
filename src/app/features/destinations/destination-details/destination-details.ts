@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {DestinationItem} from "../destination-item/destination-item";
 import {filter, map, Observable, switchMap} from "rxjs";
 import {Destination} from "../../../models/destination.model";
@@ -7,6 +7,7 @@ import {DestinationsService} from "../../../core/services/destinations.service";
 import {AsyncPipe} from "@angular/common";
 import {AuthService} from "../../../core/services/auth.service";
 import {FormsModule} from "@angular/forms";
+import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-destination-details',
@@ -15,7 +16,13 @@ import {FormsModule} from "@angular/forms";
     standalone: true,
     styleUrl: './destination-details.css'
 })
-export class DestinationDetails {
+export class DestinationDetails implements OnInit{
+
+    constructor(private title: Title) {}
+
+    ngOnInit(): void {
+        this.title.setTitle('Details');
+    }
 
     private route = inject(ActivatedRoute);
     private destinationService = inject(DestinationsService);
