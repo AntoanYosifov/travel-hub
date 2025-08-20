@@ -1,59 +1,50 @@
 # TravelHub
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.5.
+A small Angular app for sharing travel destinations. Users can register/login, add destinations, like/save places (“Want to visit”), and manage personal collections — all in a clean, dark-theme UI.
 
-## Development server
+## Tech Used
+- **Angular 20.0.5. (standalone components, Signals, RxJS)
+- **Firebase**: Authentication & Firestore (+ one Cloud Function for cascade delete)
+- **TypeScript** + component-scoped CSS
 
-To start a local development server, run:
-
+## Quick Start
 ```bash
-ng serve
-```
+git clone <REPO_URL>
+cd travel-hub
+npm install
+npm start   # or: ng serve
+# open http://localhost:4200
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+✅ No extra setup required — the app is preconfigured to use a live Firebase backend.
+The config is in src/environments/environment.ts.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+Features
 
-```bash
-ng generate component component-name
-```
+Catalog: /destinations
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+Details: /destinations/:id
 
-```bash
-ng generate --help
-```
+Auth: register & login (email/password)
 
-## Building
+Create destinations (authenticated users)
 
-To build the project run:
+Edit your destination’s description
 
-```bash
-ng build
-```
+Delete your own destinations
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Interactions: Like ❤️ and “Want to visit” 📌
 
-## Running unit tests
+Collections:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+/collections/want-to-visit
 
-```bash
-ng test
-```
+/collections/liked
 
-## Running end-to-end tests
+/collections/added-by-you
 
-For end-to-end (e2e) testing, run:
+Profile: view + edit display name
 
-```bash
-ng e2e
-```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Happy travels! 🌍✈️
