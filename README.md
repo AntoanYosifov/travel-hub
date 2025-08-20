@@ -4,7 +4,7 @@ A small Angular app for sharing travel destinations. Users can register/login, a
 
 ## Tech Used
 - **Angular 20.0.5. (standalone components, Signals, RxJS)
-- **Firebase**: Authentication & Firestore (+ one Cloud Function for cascade delete)
+- **Firebase**: Authentication & Firestore (Cloud Functions for cascade update and delete)
 - **TypeScript** + component-scoped CSS
 
 ## Quick Start
