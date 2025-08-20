@@ -11,7 +11,7 @@ import {Title} from "@angular/platform-browser";
 
 @Component({
     selector: 'app-destination-details',
-    imports: [DestinationItem, AsyncPipe, RouterLink, FormsModule],
+    imports: [DestinationItem, AsyncPipe, FormsModule],
     templateUrl: './destination-details.html',
     standalone: true,
     styleUrl: './destination-details.css'

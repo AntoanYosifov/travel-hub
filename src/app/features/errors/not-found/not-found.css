@@ -1,0 +1,10 @@
+.nf-wrap{
+    max-width: 720px; margin: 3rem auto; padding: 2rem;
+    background: var(--bg-elev); border:1px solid var(--border);
+    border-radius: 12px; text-align:center; color: var(--text);
+}
+.btn{
+    display:inline-block; margin-top:1rem; padding:.55rem .9rem;
+    border-radius: 999px; border:1px solid var(--border);
+    text-decoration:none; color:var(--text); background: #0f141a;
+}

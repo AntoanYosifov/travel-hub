@@ -63,5 +63,9 @@ export const routes: Routes = [
         canMatch: [authGuard],
         loadComponent: () => import('./features/collections/liked/liked').then(c => c.Liked)
     },
+    {
+        path: '**',
+        loadComponent: () => import('./features/errors/not-found/not-found').then(c => c.NotFound)
+    }
 
 ];
