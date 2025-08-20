@@ -20,11 +20,15 @@
             <div class="form-group span-2">
                 <label for="description">Describe your exp...</label>
                 <textarea
+                        [class.input-error]="isDescriptionNotValid"
                         id="description"
                         formControlName="description"
                         placeholder="Say something about this place..."
                         rows="6"
                 ></textarea>
+                @if (isDescriptionNotValid) {
+                    <p class="error">{{ descriptionErrorMessage }}</p>
+                }
             </div>
 
             <div class="form-group">

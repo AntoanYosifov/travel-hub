@@ -32,7 +32,7 @@ export class NewDestination implements OnInit{
         this.form = this.formBuilder.group(
             {
                 locationName: ['', [Validators.required, Validators.minLength(4)]],
-                description: ['', Validators.required],
+                description: ['', [Validators.required, Validators.minLength(10)]],
                 imgUrl: ['', Validators.required],
                 photoCredit: ['']
             }
@@ -48,8 +48,16 @@ export class NewDestination implements OnInit{
         return this.form.get('locationName');
     }
 
+    get description(): AbstractControl<any, any> | null {
+        return this.form.get('description');
+    }
+
     get isLocationNameNotValid(): boolean {
         return this.locationName?.invalid && (this.locationName?.dirty || this.locationName?.touched) || false;
+    }
+
+    get isDescriptionNotValid(): boolean {
+        return this.description?.invalid && (this.description?.dirty || this.description?.touched) || false;
     }
 
     get locationNameErrorMessage(): string {
@@ -61,6 +69,16 @@ export class NewDestination implements OnInit{
         }
         return '';
     }
+    get descriptionErrorMessage(): string {
+        if (this.description?.errors?.['required']) {
+            return 'Description is required!';
+        }
+        if (this.description?.errors?.['minlength']) {
+            return 'Minimum of 10 characters!';
+        }
+        return '';
+    }
+
 
     onSubmit(): void {
         if (this.form.invalid) {
