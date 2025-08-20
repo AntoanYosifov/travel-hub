@@ -7,7 +7,18 @@
                 <li><a routerLink="/destinations">Destinations</a></li>
                 @if(authResolved()) {
                     @if(isLoggedIn()) {
-                        <li><a routerLink="/collections">My Collections</a></li>
+                        <li class="dropdown">
+                            <button type="button" class="dropdown-toggle">
+                                My Collections
+                                <span class="chev" aria-hidden="true">▾</span>
+                            </button>
+
+                            <ul class="submenu" role="menu">
+                                <li role="none"><a role="menuitem" routerLink="/collections/want-to-visit">Want to visit</a></li>
+                                <li role="none"><a role="menuitem" routerLink="/collections/liked">Liked</a></li>
+                                <li role="none"><a role="menuitem" routerLink="/collections/added-by-you">Added by you</a></li>
+                            </ul>
+                        </li>
                         <li><a routerLink="/destinations/new">New Destination</a></li>
                         <li><a routerLink="/profile">{{ profile()?.displayName }}</a></li>
                         <li><button type="button" (click)="logout()">Logout</button></li>

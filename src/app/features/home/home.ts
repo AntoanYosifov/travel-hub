@@ -3,7 +3,6 @@ import {DestinationBoard} from "../destinations/destination-board/destination-bo
 import {DestinationsService} from "../../core/services/destinations.service";
 import {map, Observable} from "rxjs";
 import {Destination} from "../../models/destination.model";
-import {list} from "@angular/fire/storage";
 import {RouterLink} from "@angular/router";
 import {AuthService} from "../../core/services/auth.service";
 

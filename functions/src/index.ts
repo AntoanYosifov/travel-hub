@@ -1,6 +1,6 @@
 // functions/src/index.ts
 import * as admin from "firebase-admin";
-import { onDocumentDeleted } from "firebase-functions/v2/firestore";
+import {onDocumentDeleted, onDocumentUpdated} from "firebase-functions/v2/firestore";
 import { logger } from "firebase-functions";
 
 admin.initializeApp();
@@ -58,5 +58,40 @@ export const onDestinationDeleted = onDocumentDeleted(
     logger.info(
       `Cascade delete for ${destId}: removed ${likeRefs.length} likes and ${wtvSnapById.size} wantToVisit docs`
     );
+  }
+);
+
+export const onDestinationUpdated = onDocumentUpdated(
+  { document: "destinations/{destId}", region: "europe-west1" },
+  async (event) => {
+    const before = event.data?.before.data();
+    const after  = event.data?.after.data();
+    if (!before || !after) return;
+
+    const destId = event.params.destId as string;
+
+
+    const update: FirebaseFirestore.UpdateData<any> = {};
+    if (before.description   !== after.description)   update.description   = after.description;
+
+    if (Object.keys(update).length === 0) return;
+
+    const snap = await db
+      .collectionGroup("wantToVisit")
+      .where("id", "==", destId)
+      .get();
+
+    const batches: FirebaseFirestore.WriteBatch[] = [];
+    let batch = db.batch();
+    let ops = 0;
+
+    for (const doc of snap.docs) {
+      batch.update(doc.ref, update);
+      if (++ops === 450) { batches.push(batch); batch = db.batch(); ops = 0; }
+    }
+    if (ops) batches.push(batch);
+
+    await Promise.all(batches.map((b) => b.commit()));
+    logger.info(`Propagated updates for ${destId} to ${snap.size} wantToVisit docs.`);
   }
 );
