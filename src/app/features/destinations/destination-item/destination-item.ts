@@ -10,7 +10,7 @@ import {WtvButton} from "../wtv-button/wtv-button";
     imports: [
         RouterLink,
         LikeButton,
-        WtvButton
+        WtvButton,
     ],
     templateUrl: './destination-item.html',
     standalone: true,

@@ -9,7 +9,7 @@ A small Angular app for sharing travel destinations. Users can register/login, a
 
 ## Quick Start
 ```bash
-git clone <REPO_URL>
+git clone https://github.com/AntoanYosifov/travel-hub
 cd travel-hub
 npm install
 npm start   # or: ng serve
