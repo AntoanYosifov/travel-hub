@@ -1,7 +1,7 @@
 <button
         type="button"
-        class="like-btn"
-        [class.liked]="has$ | async"
+        class="wtv-btn"
+        [class.added]="has$ | async"
         [disabled]="!(uidPresent$ | async)"
         (click)="toggle()"
         aria-label="Toggle want to visit"

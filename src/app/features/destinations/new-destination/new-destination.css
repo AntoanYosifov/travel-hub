@@ -46,7 +46,6 @@
 }
 .new-destination .form-group textarea{ resize: vertical; min-height: 140px; }
 
-/* ❗ error INPUT state (matches login/register) */
 .new-destination .input-error{
     border-color: #f85149 !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
@@ -57,7 +56,6 @@
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
 }
 
-/* ❗ error TEXT (stronger specificity so it wins) */
 .new-destination .form-group p.error,
 .new-destination .span-2 p.error{
     margin:.25rem 0 0; color:#f85149; font-weight:600; font-style: normal; font-size:.85rem;
