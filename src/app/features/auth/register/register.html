@@ -43,6 +43,7 @@
                 <div class="field">
                     <label for="rePassword">Confirm Password</label><br/>
                     <input class="control"
+                           [class.input-error]="isPasswordsNotValid || isPasswordsMismatch"
                            id="rePassword"
                            formControlName="rePassword"
                            type="password"

@@ -1,6 +1,14 @@
 <header class="site-header">
     <div class="container">
-        <h1 class="site-title"><a routerLink="/home">TravelHub</a></h1>
+        <h1 class="site-title" @logoEnter>
+            <a routerLink="/home"
+               [@logoHover]="isLogoHover ? 'hover' : 'rest'"
+               (mouseenter)="isLogoHover = true"
+               (mouseleave)="isLogoHover = false"
+            >
+                TravelHub
+            </a>
+        </h1>
         <nav class="main-nav">
             <ul>
                 <li><a routerLink="/home">Home</a></li>

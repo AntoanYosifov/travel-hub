@@ -33,7 +33,7 @@ export class NewDestination implements OnInit{
             {
                 locationName: ['', [Validators.required, Validators.minLength(4)]],
                 description: ['', [Validators.required, Validators.minLength(10)]],
-                imgUrl: ['', Validators.required],
+                imgUrl: [''],
                 photoCredit: ['']
             }
         )

@@ -39,7 +39,10 @@
     gap: 1rem;
 }
 .field{ display:flex; flex-direction:column; gap:.4rem; }
-.row-2{ display:grid; grid-template-columns: 1fr 1fr; gap: 1rem; grid-column: 1 / -1; }
+.row-2{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    grid-column: 1 / -1;
+}
 .span-2{ grid-column: 1 / -1; }
 
 /* labels & controls */
@@ -59,14 +62,29 @@ label{ color:var(--text); font-size:.9rem; }
     box-shadow: 0 0 0 3px rgba(88,166,255,.15);
 }
 
-/* errors */
-.input-error{ border-color: var(--danger) !important; }
-.error{
+/* error INPUT state (match login) */
+.input-error{
+    border-color: #f85149 !important;
+    box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
+}
+.control.input-error:focus{
+    border-color: #f85149 !important;
+    box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
+}
+
+/* error TEXT — scoped high-specificity so it wins */
+.form-card .field p.error,
+.form-card .row-2 p.error,
+.form-grid p.error{
     margin: .25rem 0 0;
-    color: var(--danger);
+    color: #f85149;           /* or var(--danger) */
     font-weight: 600;
+    font-style: normal;       /* cancel any inherited italics */
     font-size: .85rem;
 }
+
+/* (optional) also color the group-level mismatch message that spans both cols */
+.form-card .span-2.error { color:#f85149; font-style: normal; }
 
 /* actions */
 .actions{
