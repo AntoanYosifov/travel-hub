@@ -8,6 +8,13 @@
     --accent-2:#7cc4ff;
 }
 
+/* Page fade-in */
+:host{
+    display:block;
+    animation: pageIn .35s ease-out both;
+    will-change: opacity, transform;
+}
+
 .outer-container{
     margin: 0 auto;
     max-width: min(520px, 94vw);
@@ -16,23 +23,32 @@
     justify-content: center;
 }
 
-
 .auth-card{
     width: 100%;
     background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
     box-shadow: 0 12px 32px rgba(0,0,0,.35);
+
+    /* card pop-in */
+    animation: cardIn .38s ease-out .04s both;
 }
 
 .inner-container{ padding: 1.5rem; }
 
-
+/* Gradient title + underline + entrance */
 .auth-title{
     margin: 0 0 1.25rem;
-    color: var(--text);
     font-size: clamp(1.1rem, .8vw + 1rem, 1.6rem);
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+
+    color: transparent;
+    background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+
     position: relative;
+    animation: titleUp .42s ease-out both;
 }
 .auth-title::after{
     content:"";
@@ -44,7 +60,7 @@
     border-radius:2px;
 }
 
-
+/* Form layout */
 .form-stack{
     display: grid;
     gap: 1rem;
@@ -52,14 +68,20 @@
 .form-row{
     display: grid;
     gap: .5rem;
+
+    /* subtle stagger for rows */
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out both;
 }
+.form-row:nth-of-type(1){ animation-delay:.06s; }
+.form-row:nth-of-type(2){ animation-delay:.10s; }
+.form-row:nth-of-type(3){ animation-delay:.14s; }
 
-
+/* Labels & inputs */
 label{
     color: var(--muted);
     font-weight: 600;
 }
-
 
 input{
     width: 100%;
@@ -90,7 +112,7 @@ input:focus{
     font-size: .9rem;
 }
 
-
+/* Submit button */
 .auth-card button[type="submit"]{
     width: 100%;
     height: 44px;
@@ -100,9 +122,12 @@ input:focus{
     letter-spacing: .2px;
     border: 1px solid var(--accent-2, #467ecf);
     background: linear-gradient(180deg, var(--accent, #58a6ff), var(--accent-2, #467ecf));
-    color: #0b1220;              /* readable on the blue gradient */
+    color: #0b1220;
     box-shadow: 0 6px 16px rgba(88,166,255,.25);
     transition: transform .06s ease, filter .15s ease;
+    cursor: pointer;
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out .18s both;
 }
 .auth-card button[type="submit"]:hover{ filter: brightness(1.06); }
 .auth-card button[type="submit"]:active{ transform: translateY(1px); }
@@ -110,7 +135,6 @@ input:focus{
     outline: none;
     box-shadow: 0 0 0 3px rgba(88,166,255,.35);
 }
-
 .auth-card button[type="submit"]:disabled{
     background: #1b2430;
     border-color: #41536a;
@@ -121,5 +145,78 @@ input:focus{
     filter: none;
 }
 
-
 .inner-container *{ margin-bottom: 0; }
+
+@keyframes pageIn{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes cardIn{
+    0%   { opacity:0; transform: translateY(8px) scale(.99); filter: saturate(.95); }
+    100% { opacity:1; transform: translateY(0)  scale(1);   filter: saturate(1); }
+}
+@keyframes titleUp{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes fieldIn{
+    from{ opacity:0; transform: translateY(8px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    :host,
+    .auth-card,
+    .auth-title,
+    .form-row,
+    .auth-card button[type="submit"]{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}
+
+input{
+    transition:
+            border-color .18s ease,
+            box-shadow   .18s ease,
+            background-color .18s ease;
+}
+
+.input-error{
+    border-color: #f85149 !important;
+    box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
+    animation:
+            fieldErrorPop .16s ease-out,
+            fieldErrorPulse .9s ease-out .12s 1;
+}
+
+input.input-error:focus{
+    border-color: #f85149 !important;
+    box-shadow: 0 0 0 3px rgba(248,81,73,.18) !important;
+}
+
+.error{
+    opacity: 0;
+    transform: translateY(-4px);
+    animation: errorIn .18s ease-out forwards;
+}
+
+@keyframes fieldErrorPop{
+    0%   { transform: scale(1.005); }
+    100% { transform: scale(1); }
+}
+@keyframes fieldErrorPulse{
+    0%   { box-shadow: 0 0 0 0   rgba(248,81,73,.26); }
+    100% { box-shadow: 0 0 0 10px rgba(248,81,73,0); }
+}
+@keyframes errorIn{
+    to { opacity:1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    .input-error, .error{
+        animation: none !important;
+    }
+}
+

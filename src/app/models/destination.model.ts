@@ -3,7 +3,12 @@ export interface Destination {
     locationName: string;
     description: string;
     imgUrl: string;
-    photoCredit: string;
+
     authorId: string;
-    authorName: string
+    authorName: string;
+
+    storagePath?: string;
+
+    /** legacy: present on older docs; safe to keep optional so reading won’t break */
+    photoCredit?: string;
 }

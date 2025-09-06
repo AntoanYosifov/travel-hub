@@ -4,35 +4,49 @@
             <a routerLink="/home"
                [@logoHover]="isLogoHover ? 'hover' : 'rest'"
                (mouseenter)="isLogoHover = true"
-               (mouseleave)="isLogoHover = false"
-            >
+               (mouseleave)="isLogoHover = false">
                 TravelHub
             </a>
         </h1>
+
         <nav class="main-nav">
             <ul>
-                <li><a routerLink="/home">Home</a></li>
-                <li><a routerLink="/destinations">Destinations</a></li>
+                <li>
+                    <a class="nav-link"
+                       routerLink="/home"
+                       routerLinkActive="active"
+                       [routerLinkActiveOptions]="{ exact: true }"
+                       aria-current="page">Home</a>
+                </li>
+
+                <li>
+                    <a class="nav-link"
+                       routerLink="/destinations"
+                       routerLinkActive="active">Destinations</a>
+                </li>
+
                 @if(authResolved()) {
                     @if(isLoggedIn()) {
+
                         <li class="dropdown">
-                            <button type="button" class="dropdown-toggle">
-                                My Collections
-                                <span class="chev" aria-hidden="true">▾</span>
+                            <button type="button" class="nav-link dropdown-toggle">
+                                My Collections <span class="chev" aria-hidden="true">▾</span>
                             </button>
 
                             <ul class="submenu" role="menu">
-                                <li role="none"><a role="menuitem" routerLink="/collections/want-to-visit">Want to visit</a></li>
-                                <li role="none"><a role="menuitem" routerLink="/collections/liked">Liked</a></li>
-                                <li role="none"><a role="menuitem" routerLink="/collections/added-by-you">Added by you</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/want-to-visit">Want to visit</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/liked">Liked</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/added-by-you">Added by you</a></li>
                             </ul>
                         </li>
-                        <li><a routerLink="/destinations/new">New Destination</a></li>
-                        <li><a routerLink="/profile">{{ profile()?.displayName }}</a></li>
-                        <li><button type="button" (click)="logout()">Logout</button></li>
+
+                        <li><a class="nav-link" routerLink="/destinations/new" routerLinkActive="active">New Destination</a></li>
+                        <li><a class="nav-link" routerLink="/profile" routerLinkActive="active">{{ profile()?.displayName }}</a></li>
+                        <li><button class="nav-link" type="button" (click)="logout()">Logout</button></li>
+
                     } @else {
-                        <li><a routerLink="/register">Register</a></li>
-                        <li><a routerLink="/login">Login</a></li>
+                        <li><a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a></li>
+                        <li><a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a></li>
                     }
                 }
             </ul>

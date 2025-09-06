@@ -1,21 +1,52 @@
+:root{
+    --text:#c9d1d9; --muted:#8b949e; --border:#30363d;
+    --accent:#58a6ff;
+}
+
+/* ====== Board wrapper ====== */
 .destination-board{
     max-width: min(1150px, 94vw);
     margin: 0 auto;
     padding: 0 1rem 1.25rem;
-
+    border:none;
     display: grid;
     gap: .9rem;
-    /* smaller columns so at least 2 full cards fit comfortably */
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+
+    /* subtle entrance for the whole section */
+    animation: boardFade .35s ease-out both;
 }
 
+/* ====== Title (modern gradient text + underline) ====== */
 .board-title{
     grid-column: 1 / -1;
-    margin: 0 0 .75rem;
-    font-size: clamp(1.15rem, .7vw + 1rem, 1.5rem);
+    margin: .25rem 0 .85rem;
     text-align: center;
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+    font-size: clamp(1.15rem, .7vw + 1rem, 1.5rem);
+
+    color: transparent;
+    background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    animation: titleUp .4s ease-out both;
 }
 
+.board-title::after{
+    content:"";
+    display:block;
+    width: clamp(56px, 7vw, 90px);
+    height: 3px;
+    margin: .5rem auto 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity:.95;
+}
+
+/* ====== Empty state ====== */
 .empty{
     grid-column: 1 / -1;
     text-align: center;
@@ -24,4 +55,47 @@
     border: 1px dashed var(--border);
     border-radius: 10px;
     background: rgba(22,27,34,.35);
+}
+
+/* ====== Card entrance (staggered) ====== */
+/* The <app-destination-item> renders each card. Give them a soft lift-in. */
+.destination-board app-destination-item{
+    opacity: 0;
+    transform: translateY(10px) scale(.985);
+    animation: cardIn .42s ease-out forwards;
+}
+
+/* Stagger first rows (tweak delays as you like) */
+.destination-board app-destination-item:nth-child(1){ animation-delay: .02s; }
+.destination-board app-destination-item:nth-child(2){ animation-delay: .07s; }
+.destination-board app-destination-item:nth-child(3){ animation-delay: .12s; }
+.destination-board app-destination-item:nth-child(4){ animation-delay: .17s; }
+.destination-board app-destination-item:nth-child(5){ animation-delay: .22s; }
+.destination-board app-destination-item:nth-child(6){ animation-delay: .27s; }
+.destination-board app-destination-item:nth-child(7){ animation-delay: .32s; }
+.destination-board app-destination-item:nth-child(8){ animation-delay: .37s; }
+
+/* ====== Keyframes ====== */
+@keyframes boardFade{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes titleUp{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes cardIn{
+    0%   { opacity:0; transform: translateY(10px) scale(.985); filter: saturate(.9); }
+    100% { opacity:1; transform: translateY(0)    scale(1);    filter: saturate(1); }
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce){
+    .destination-board,
+    .board-title,
+    .destination-board app-destination-item{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
 }

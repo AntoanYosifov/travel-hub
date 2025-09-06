@@ -5,7 +5,7 @@
 
 .wrapper{
     background: linear-gradient(180deg, rgba(13,17,23,.7), rgba(13,17,23,.45));
-    border: 1px solid var(--border);
+    /*border: 1px solid var(--border);*/
     border-radius: 12px;
     padding: 1rem;
     transition: border-color .2s, box-shadow .2s, transform .2s;

@@ -7,28 +7,47 @@
     --accent:#58a6ff;
 }
 
+/* Page fade-in */
+:host{
+    display:block;
+    animation: pageIn .35s ease-out both;
+    will-change: opacity, transform;
+}
+
+/* ---------- shell ---------- */
 .outer-container{
     margin: 0 auto;
     max-width: min(640px, 94vw);
     padding: 2rem 1rem 3rem;
     display:flex;
     justify-content:center;
+
 }
 
 .profile-card{
     width: 100%;
     background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    border:none;
     box-shadow: 0 12px 32px rgba(0,0,0,.35);
+    animation: cardIn .38s ease-out .04s both;
 }
 .inner-container{ padding: 1.25rem; }
 
+/* ---------- title (gradient + underline + entrance) ---------- */
 .profile-title{
     margin: 0 0 1rem;
     font-size: clamp(1.2rem, .8vw + 1rem, 1.6rem);
-    color: var(--text);
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+
+    color: transparent;
+    background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+
     position: relative;
+    animation: titleUp .42s ease-out both;
 }
 .profile-title::after{
     content:"";
@@ -40,12 +59,21 @@
     border-radius:2px;
 }
 
+/* ---------- rows & badges ---------- */
 .kv-row{
     display:flex;
     align-items:center;
     gap:.75rem;
     margin-bottom: .9rem;
+
+    /* soft stagger for the rows */
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out both;
 }
+.kv-row:nth-of-type(1){ animation-delay:.06s; }
+.kv-row:nth-of-type(2){ animation-delay:.10s; }
+.kv-row:nth-of-type(3){ animation-delay:.14s; }
+
 .profile-card .key{
     color: var(--muted);
     font-weight: 600;
@@ -75,8 +103,10 @@
     color: var(--muted);
 }
 
+/* keep layout tidy */
 .inner-container *{ margin-bottom: 0; }
 
+/* ---------- buttons ---------- */
 .btn{
     --h: 38px;
     display:inline-flex;
@@ -130,12 +160,16 @@
     filter: brightness(1.03);
 }
 
+/* ---------- edit form (with its own pop) ---------- */
 .edit-form{
     margin-top: .75rem;
     padding: .9rem;
     border: 1px dashed var(--border);
     border-radius: 12px;
     background: linear-gradient(180deg, rgba(88,166,255,.06), transparent 120%);
+
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out .08s both;
 }
 .edit-form .kv-row{ margin-bottom: .8rem; }
 .field-col{ flex: 1 1 auto; }
@@ -154,6 +188,7 @@
     box-shadow: 0 0 0 3px rgba(88,166,255,.15);
 }
 
+/* validation */
 .input-error{
     border-color:#f85149 !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.12);
@@ -169,4 +204,35 @@
     display:flex;
     gap:.6rem;
     justify-content:flex-end;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes pageIn{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes cardIn{
+    0%   { opacity:0; transform: translateY(8px) scale(.99); filter: saturate(.95); }
+    100% { opacity:1; transform: translateY(0)  scale(1);   filter: saturate(1); }
+}
+@keyframes titleUp{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes fieldIn{
+    from{ opacity:0; transform: translateY(8px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+    :host,
+    .profile-card,
+    .profile-title,
+    .kv-row,
+    .edit-form{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
 }

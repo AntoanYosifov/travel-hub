@@ -1,12 +1,56 @@
+:root{
+    --bg-card:#0d1117; --bg-elev:#161b22; --border:#30363d;
+    --text:#c9d1d9; --muted:#8b949e; --accent:#58a6ff;
+}
+
+/* Animate the component itself */
+:host{
+    display:block;
+    animation: detailsIn .35s ease-out both;
+    will-change: opacity, transform;
+}
+
+/* === wrapper === */
 .details-container{
     max-width: min(1100px, 92vw);
     margin: 0 auto;
     padding: 0 1rem;
+    border: none;
 }
-h4{
+
+/* === title === */
+.details-container > h4{
     margin: 0 0 .75rem;
     font-size: clamp(1.1rem, .7vw + 1rem, 1.4rem);
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+    color: transparent;
+    background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: titleUp .4s ease-out both;
 }
+.details-container > h4::after{
+    content:"";
+    display:block;
+    width: clamp(56px, 7vw, 86px);
+    height: 3px;
+    margin: .45rem 0 0;
+    border-radius: 3px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    opacity:.95;
+}
+
+/* Fade in the child card */
+.details-container :where(app-destination-item){
+    opacity:0;
+    transform: translateY(8px) scale(.99);
+    animation: cardIn .42s ease-out .04s both;
+    will-change: opacity, transform;
+}
+
+/* === owner actions / edit box === */
 .owner-actions{
     margin-top: .75rem;
     display: flex;
@@ -20,6 +64,7 @@ h4{
     border: 1px solid var(--border);
     border-radius: 10px;
     background: var(--bg-elev);
+    animation: cardIn .38s ease-out .06s both;
 }
 .edit-box label{
     display:block;
@@ -31,7 +76,7 @@ h4{
     width:100%;
     border:1px solid var(--border);
     background: var(--bg-card);
-    color: var(--text);
+    color:var(--text);
     border-radius:8px;
     padding:.6rem .7rem;
     outline:none;
@@ -47,18 +92,89 @@ h4{
     margin-top:.6rem;
 }
 
-/* buttons reused */
+/* === buttons === */
 .btn{
     display:inline-flex; align-items:center; gap:.4rem;
     padding:.45rem .8rem; border-radius:999px;
     border:1px solid var(--border); background:var(--bg-elev); color:var(--text);
     text-decoration:none; font-weight:600;
-    transition: background .2s, border-color .2s, transform .02s;
+    transition: background .2s, border-color .2s, transform .02s, filter .2s;
 }
-.btn:hover{ border-color:#3d444d; background:#11161a; transform: translateY(-1px); }
+
+/* Limit the dark-on-hover to NON-accent & NON-disabled buttons */
+.btn:hover:not(.btn-accent):not([disabled]){
+    border-color:#3d444d;
+    background:#11161a;
+    transform: translateY(-1px);
+}
+
+/* Accent button keeps its blue on hover */
+.btn-accent{
+    background: var(--accent);
+    color: #0b1220;
+    border-color: transparent;
+    box-shadow: 0 6px 16px rgba(88,166,255,.22);
+}
+.btn-accent:hover{
+    filter: brightness(1.06);
+    background: var(--accent);           /* stay blue */
+    border-color: transparent;
+    transform: translateY(-1px);
+}
+
+/* Disabled states stay readable and don’t change on hover */
+.btn[disabled],
+.btn[disabled]:hover{
+    cursor: not-allowed;
+    transform: none;
+    filter: none;
+    background: #131a23;
+    border-color:#2a3342;
+    color:#93a4b7;
+    opacity: .9;
+}
+
+/* Specific disabled look for accent button */
+.btn-accent[disabled],
+.btn-accent[disabled]:hover{
+    background:#234170;          /* muted blue */
+    border-color:#3a5ea3;
+    color:#d9e7ff;
+    box-shadow:none;
+    cursor:not-allowed;
+    transform:none;
+    filter:none;
+}
+
+/* Danger variant unchanged */
 .btn.danger{ background:#2b0f14; border-color:#712b2f; color:#ffb4b4; }
-.btn.danger:hover{ background:#3a1419; border-color:#8b373c; }
-.btn-neutral{ background: var(--bg-card); }
-.btn-accent{ background: var(--accent); color: #0b1220; border-color: transparent; }
-.btn-accent:hover{ filter: brightness(1.05); }
+.btn.danger:hover:not([disabled]){ background:#3a1419; border-color:#8b373c; }
+
+/* Muted helper */
 .muted{ color: var(--muted); }
+
+/* === keyframes === */
+@keyframes detailsIn{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes titleUp{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes cardIn{
+    0%   { opacity:0; transform: translateY(8px) scale(.99); filter: saturate(.95); }
+    100% { opacity:1; transform: translateY(0)  scale(1);   filter: saturate(1); }
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+    :host,
+    .details-container > h4,
+    .details-container :where(app-destination-item),
+    .edit-box{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
+}

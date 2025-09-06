@@ -31,29 +31,57 @@
                 }
             </div>
 
-            <div class="form-group">
-                <label for="imgUrl">Image URL</label>
-                <input
-                        type="url"
-                        id="imgUrl"
-                        formControlName="imgUrl"
-                        placeholder="https://example.com/photo.jpg"
-                />
-            </div>
+            <div class="form-group span-2">
+                <label for="image">Image</label>
 
-            <div class="form-group">
-                <label for="photoCredit">Photo Credit</label>
-                <input
-                        type="text"
-                        id="photoCredit"
-                        formControlName="photoCredit"
-                        placeholder="© Photographer Name"
-                />
+                <div class="file-picker" [class.error]="!!fileError || (uploading && uploadProgress < 100)">
+
+                    <input
+                            #fileInput
+                            id="image"
+                            class="file-input"
+                            type="file"
+                            accept="image/*"
+                            (change)="onFileSelected($event)"
+                    />
+
+                    <label class="file-btn" for="image">
+                        <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+                            <path d="M19 13v6H5v-6H3v8h18v-8h-2zM11 3h2v8h3l-4 4-4-4h3V3z" fill="currentColor"/>
+                        </svg>
+                        <span>{{ selectedFile ? 'Change image' : 'Choose image' }}</span>
+                    </label>
+
+                    <span class="file-name" [class.placeholder]="!selectedFile">
+                        {{ selectedFile ? selectedFile.name : 'No file chosen' }}
+                    </span>
+
+                    @if (selectedFile) {
+                        <button type="button" class="file-clear" (click)="clearFile(fileInput)">
+                            Clear
+                        </button>
+                    }
+
+                </div>
+
+                @if (fileError) {
+                    <p class="error">{{ fileError }}</p>
+                }
+
+                @if (previewUrl) {
+                    <div style="margin-top:.5rem">
+                        <img [src]="previewUrl" alt="Preview" style="max-width:100%; border-radius:8px;">
+                    </div>
+                }
+
+                @if (uploading) {
+                    <p class="muted">Uploading… {{ uploadProgress }}%</p>
+                }
             </div>
 
             <div class="actions">
-                <button class="btn-accent" type="submit" [disabled]="form.invalid">
-                    Save Destination
+                <button class="btn-accent" type="submit" [disabled]="form.invalid || uploading || !selectedFile">
+                    {{ uploading ? ('Uploading… ' + uploadProgress + '%') : 'Save Destination' }}
                 </button>
             </div>
         </form>

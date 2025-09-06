@@ -1,5 +1,5 @@
 import {Component, Signal} from '@angular/core';
-import {Router, RouterLink} from "@angular/router";
+import {Router, RouterLink, RouterLinkActive} from "@angular/router";
 import {AuthService} from "../../../core/services/auth.service";
 import {UserModel} from "../../../models/user.model";
 import { trigger, state, style, transition, animate } from '@angular/animations';
@@ -7,9 +7,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 
 @Component({
   selector: 'app-header',
-    imports: [
-        RouterLink,
-    ],
+  imports: [
+    RouterLink,
+    RouterLinkActive,
+  ],
   animations: [
     trigger('logoHover', [
       state('rest',  style({ transform: 'translateZ(0) scale(1)',    textShadow: 'none' })),

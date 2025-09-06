@@ -10,6 +10,13 @@
     --success-2:#2ea043;
 }
 
+/* Page fade-in */
+:host{
+    display:block;
+    animation: pageIn .35s ease-out both;
+    will-change: opacity, transform;
+}
+
 /* layout */
 .outer-container{
     margin: 0 auto;
@@ -21,15 +28,39 @@
 .form-card{
     width: 100%;
     background: var(--bg-card);
-    border: 1px solid var(--border);
-    border-radius: 14px;
+    /*border: 1px solid var(--border);*/
+    /*border-radius: 14px;*/
     box-shadow: 0 12px 32px rgba(0,0,0,.35);
+
+    /* card pop-in */
+    animation: cardIn .38s ease-out .04s both;
 }
 .inner-container{ padding: 1.25rem; }
+
+/* title (modern gradient + underline + entrance) */
 .form-title{
     margin: 0 0 1rem;
     font-size: clamp(1.2rem, .8vw + 1rem, 1.6rem);
-    color: var(--text);
+    font-weight: 700;
+    letter-spacing: .2px;
+    line-height: 1.15;
+
+    color: transparent;
+    background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    animation: titleUp .42s ease-out both;
+    position: relative;
+}
+.form-title::after{
+    content:"";
+    display:block;
+    height:2px;
+    width:72px;
+    margin-top:.5rem;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    border-radius:2px;
 }
 
 /* grid */
@@ -45,6 +76,17 @@
 }
 .span-2{ grid-column: 1 / -1; }
 
+/* subtle stagger for fields */
+.form-grid > *{ opacity:0; transform: translateY(8px); animation: fieldIn .42s ease-out both; }
+.form-grid > *:nth-child(1){ animation-delay:.06s; }
+.form-grid > *:nth-child(2){ animation-delay:.10s; }
+.form-grid > *:nth-child(3){ animation-delay:.14s; }
+.form-grid > *:nth-child(4){ animation-delay:.18s; }
+/* rows inside the 2-col group */
+.row-2 > *{ opacity:0; transform: translateY(8px); animation: fieldIn .42s ease-out both; }
+.row-2 > *:nth-child(1){ animation-delay:.12s; }
+.row-2 > *:nth-child(2){ animation-delay:.16s; }
+
 /* labels & controls */
 label{ color:var(--text); font-size:.9rem; }
 .control{
@@ -54,7 +96,12 @@ label{ color:var(--text); font-size:.9rem; }
     border-radius: 10px;
     padding: .65rem .75rem;
     outline: none;
-    transition: border-color .2s, box-shadow .2s;
+
+    /* ⬇️ slower, smoother transitions for error/red state */
+    transition:
+            border-color .42s cubic-bezier(.22,.61,.36,1),
+            box-shadow   .42s cubic-bezier(.22,.61,.36,1),
+            background-color .42s ease;
 }
 .control::placeholder{ color: var(--muted); }
 .control:focus{
@@ -62,17 +109,20 @@ label{ color:var(--text); font-size:.9rem; }
     box-shadow: 0 0 0 3px rgba(88,166,255,.15);
 }
 
-/* error INPUT state (match login) */
+/* error INPUT state (kept, but now transitions are smooth due to .control) */
 .input-error{
     border-color: #f85149 !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
+
+    /* optional single pulse — comment out if you don’t want it */
+    animation: fieldErrorPulse .9s ease-out .12s 1;
 }
 .control.input-error:focus{
     border-color: #f85149 !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
 }
 
-/* error TEXT — scoped high-specificity so it wins */
+/* error TEXT — keep visible, just animate in when it appears */
 .form-card .field p.error,
 .form-card .row-2 p.error,
 .form-grid p.error{
@@ -81,10 +131,12 @@ label{ color:var(--text); font-size:.9rem; }
     font-weight: 600;
     font-style: normal;       /* cancel any inherited italics */
     font-size: .85rem;
-}
 
-/* (optional) also color the group-level mismatch message that spans both cols */
-.form-card .span-2.error { color:#f85149; font-style: normal; }
+    /* gentle fade/slide in */
+    animation: errorIn .36s cubic-bezier(.22,.61,.36,1) both;
+}
+/* group-level mismatch message spanning both cols */
+.form-card .span-2.error{ color:#f85149; font-style: normal; }
 
 /* actions */
 .actions{
@@ -92,6 +144,10 @@ label{ color:var(--text); font-size:.9rem; }
     display:flex;
     justify-content:flex-end;
     margin-top: .25rem;
+
+    /* include in stagger */
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out .22s both;
 }
 .btn-primary{
     background: var(--success);
@@ -110,4 +166,48 @@ label{ color:var(--text); font-size:.9rem; }
 @media (max-width: 720px){
     .form-grid{ grid-template-columns: 1fr; }
     .row-2{ grid-template-columns: 1fr; }
+}
+
+/* keyframes */
+@keyframes pageIn{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes cardIn{
+    0%   { opacity:0; transform: translateY(8px) scale(.99); filter: saturate(.95); }
+    100% { opacity:1; transform: translateY(0)  scale(1);   filter: saturate(1); }
+}
+@keyframes titleUp{
+    from{ opacity:0; transform: translateY(6px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+@keyframes fieldIn{
+    from{ opacity:0; transform: translateY(8px); }
+    to  { opacity:1; transform: translateY(0); }
+}
+/* new: error animations */
+@keyframes errorIn{
+    from { opacity:0; transform: translateY(-4px); }
+    to   { opacity:1; transform: translateY(0); }
+}
+@keyframes fieldErrorPulse{
+    0%   { box-shadow: 0 0 0 0 rgba(248,81,73,.26); }
+    100% { box-shadow: 0 0 0 10px rgba(248,81,73,0); }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+    :host,
+    .form-card,
+    .form-title,
+    .form-grid > *,
+    .row-2 > *,
+    .actions,
+    .form-card .field p.error,
+    .form-card .row-2 p.error,
+    .form-grid p.error{
+        animation: none !important;
+        transform: none !important;
+        opacity: 1 !important;
+    }
 }
