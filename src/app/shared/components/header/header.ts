@@ -1,16 +1,13 @@
-import {Component, Signal} from '@angular/core';
-import {Router, RouterLink, RouterLinkActive} from "@angular/router";
-import {AuthService} from "../../../core/services/auth.service";
-import {UserModel} from "../../../models/user.model";
+import { Component, Signal, HostListener } from '@angular/core';
+import { Router, RouterLink, RouterLinkActive } from "@angular/router";
+import { AuthService } from "../../../core/services/auth.service";
+import { UserModel } from "../../../models/user.model";
 import { trigger, state, style, transition, animate } from '@angular/animations';
-
 
 @Component({
   selector: 'app-header',
-  imports: [
-    RouterLink,
-    RouterLinkActive,
-  ],
+  standalone: true,
+  imports: [RouterLink, RouterLinkActive],
   animations: [
     trigger('logoHover', [
       state('rest',  style({ transform: 'translateZ(0) scale(1)',    textShadow: 'none' })),
@@ -25,30 +22,33 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
     ])
   ],
   templateUrl: './header.html',
-  standalone: true,
   styleUrl: './header.css'
 })
 export class Header {
-    readonly authResolved: Signal<boolean>;
-    readonly isLoggedIn: Signal<boolean>;
-    readonly profile:Signal<UserModel | null>;
+  readonly authResolved: Signal<boolean>;
+  readonly isLoggedIn:  Signal<boolean>;
+  readonly profile:     Signal<UserModel | null>;
 
-    isLogoHover = false;
+  isLogoHover = false;
 
-    constructor(private authService: AuthService, private router: Router) {
-      this.authResolved = authService.authResolved;
-      this.isLoggedIn = authService.isLoggedIn;
-      this.profile = authService.profileSignal;
-    }
+  // mobile menu
+  menuOpen = false;
 
-    logout() {
-      this.authService.logout$().subscribe({
-        next: () => {
-            this.router.navigate(['/home'])
-        },
-        error: err => {
-          console.error('Logout failed!',err)
-        }
-      });
-    }
+  constructor(private authService: AuthService, private router: Router) {
+    this.authResolved = authService.authResolved;
+    this.isLoggedIn   = authService.isLoggedIn;
+    this.profile      = authService.profileSignal;
+
+    // close menu on navigation
+    this.router.events.subscribe(() => this.menuOpen = false);
+  }
+
+  @HostListener('document:keydown.escape') onEsc() { this.menuOpen = false; }
+
+  logout() {
+    this.authService.logout$().subscribe({
+      next: () => this.router.navigate(['/home']),
+      error: err => console.error('Logout failed!', err)
+    });
+  }
 }

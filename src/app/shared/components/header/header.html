@@ -1,4 +1,4 @@
-<header class="site-header">
+<header class="site-header" [class.is-open]="menuOpen">
     <div class="container">
         <h1 class="site-title" @logoEnter>
             <a routerLink="/home"
@@ -9,44 +9,53 @@
             </a>
         </h1>
 
+        <button
+                type="button"
+                class="nav-toggle"
+                [attr.aria-expanded]="menuOpen"
+                aria-controls="primary-nav"
+                [attr.aria-label]="menuOpen ? 'Close menu' : 'Open menu'"
+                (click)="menuOpen = !menuOpen">
+            @if (!menuOpen) { ☰ } @else { ✕ }
+        </button>
+
         <nav class="main-nav">
-            <ul>
+            <ul id="primary-nav">
                 <li>
                     <a class="nav-link"
                        routerLink="/home"
                        routerLinkActive="active"
                        [routerLinkActiveOptions]="{ exact: true }"
+                       (click)="menuOpen = false"
                        aria-current="page">Home</a>
                 </li>
 
                 <li>
                     <a class="nav-link"
                        routerLink="/destinations"
-                       routerLinkActive="active">Destinations</a>
+                       routerLinkActive="active"
+                       (click)="menuOpen = false">Destinations</a>
                 </li>
 
-                @if(authResolved()) {
-                    @if(isLoggedIn()) {
-
+                @if (authResolved()) {
+                    @if (isLoggedIn()) {
                         <li class="dropdown">
                             <button type="button" class="nav-link dropdown-toggle">
                                 My Collections <span class="chev" aria-hidden="true">▾</span>
                             </button>
-
                             <ul class="submenu" role="menu">
-                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/want-to-visit">Want to visit</a></li>
-                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/liked">Liked</a></li>
-                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/added-by-you">Added by you</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/want-to-visit" (click)="menuOpen = false">Want to visit</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/liked" (click)="menuOpen = false">Liked</a></li>
+                                <li role="none"><a class="submenu-link" role="menuitem" routerLink="/collections/added-by-you" (click)="menuOpen = false">Added by you</a></li>
                             </ul>
                         </li>
 
-                        <li><a class="nav-link" routerLink="/destinations/new" routerLinkActive="active">New Destination</a></li>
-                        <li><a class="nav-link" routerLink="/profile" routerLinkActive="active">{{ profile()?.displayName }}</a></li>
-                        <li><button class="nav-link" type="button" (click)="logout()">Logout</button></li>
-
+                        <li><a class="nav-link" routerLink="/destinations/new" routerLinkActive="active" (click)="menuOpen = false">New Destination</a></li>
+                        <li><a class="nav-link" routerLink="/profile" routerLinkActive="active" (click)="menuOpen = false">{{ profile()?.displayName }}</a></li>
+                        <li><button class="nav-link" type="button" (click)="menuOpen = false; logout()">Logout</button></li>
                     } @else {
-                        <li><a class="nav-link" routerLink="/register" routerLinkActive="active">Register</a></li>
-                        <li><a class="nav-link" routerLink="/login" routerLinkActive="active">Login</a></li>
+                        <li><a class="nav-link" routerLink="/register" routerLinkActive="active" (click)="menuOpen = false">Register</a></li>
+                        <li><a class="nav-link" routerLink="/login" routerLinkActive="active" (click)="menuOpen = false">Login</a></li>
                     }
                 }
             </ul>
