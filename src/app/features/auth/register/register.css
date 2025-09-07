@@ -10,14 +10,12 @@
     --success-2:#2ea043;
 }
 
-/* Page fade-in */
 :host{
     display:block;
     animation: pageIn .35s ease-out both;
     will-change: opacity, transform;
 }
 
-/* layout */
 .outer-container{
     margin: 0 auto;
     max-width: min(760px, 96vw);
@@ -28,16 +26,11 @@
 .form-card{
     width: 100%;
     background: var(--bg-card);
-    /*border: 1px solid var(--border);*/
-    /*border-radius: 14px;*/
     box-shadow: 0 12px 32px rgba(0,0,0,.35);
-
-    /* card pop-in */
     animation: cardIn .38s ease-out .04s both;
 }
 .inner-container{ padding: 1.25rem; }
 
-/* title (modern gradient + underline + entrance) */
 .form-title{
     margin: 0 0 1rem;
     font-size: clamp(1.2rem, .8vw + 1rem, 1.6rem);
@@ -63,7 +56,6 @@
     border-radius:2px;
 }
 
-/* grid */
 .form-grid{
     display:grid;
     grid-template-columns: 1fr 1fr;
@@ -76,19 +68,20 @@
 }
 .span-2{ grid-column: 1 / -1; }
 
-/* subtle stagger for fields */
-.form-grid > *{ opacity:0; transform: translateY(8px); animation: fieldIn .42s ease-out both; }
+.form-grid > *,
+.row-2 > *{
+    opacity:0; transform: translateY(8px);
+    animation: fieldIn .42s ease-out both;
+}
 .form-grid > *:nth-child(1){ animation-delay:.06s; }
 .form-grid > *:nth-child(2){ animation-delay:.10s; }
 .form-grid > *:nth-child(3){ animation-delay:.14s; }
 .form-grid > *:nth-child(4){ animation-delay:.18s; }
-/* rows inside the 2-col group */
-.row-2 > *{ opacity:0; transform: translateY(8px); animation: fieldIn .42s ease-out both; }
 .row-2 > *:nth-child(1){ animation-delay:.12s; }
 .row-2 > *:nth-child(2){ animation-delay:.16s; }
 
-/* labels & controls */
 label{ color:var(--text); font-size:.9rem; }
+
 .control{
     background: var(--bg-elev);
     color: var(--text);
@@ -96,8 +89,6 @@ label{ color:var(--text); font-size:.9rem; }
     border-radius: 10px;
     padding: .65rem .75rem;
     outline: none;
-
-    /* ⬇️ slower, smoother transitions for error/red state */
     transition:
             border-color .42s cubic-bezier(.22,.61,.36,1),
             box-shadow   .42s cubic-bezier(.22,.61,.36,1),
@@ -109,43 +100,39 @@ label{ color:var(--text); font-size:.9rem; }
     box-shadow: 0 0 0 3px rgba(88,166,255,.15);
 }
 
-/* error INPUT state (kept, but now transitions are smooth due to .control) */
+.control.input-error,
 .input-error{
-    border-color: #f85149 !important;
+    border-color: var(--danger, #f85149) !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
-
-    /* optional single pulse — comment out if you don’t want it */
     animation: fieldErrorPulse .9s ease-out .12s 1;
 }
 .control.input-error:focus{
-    border-color: #f85149 !important;
+    border-color: var(--danger, #f85149) !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.15) !important;
 }
 
-/* error TEXT — keep visible, just animate in when it appears */
 .form-card .field p.error,
 .form-card .row-2 p.error,
 .form-grid p.error{
     margin: .25rem 0 0;
-    color: #f85149;           /* or var(--danger) */
+    color: var(--danger, #f85149);
     font-weight: 600;
-    font-style: normal;       /* cancel any inherited italics */
+    font-style: normal;
     font-size: .85rem;
-
-    /* gentle fade/slide in */
     animation: errorIn .36s cubic-bezier(.22,.61,.36,1) both;
 }
-/* group-level mismatch message spanning both cols */
-.form-card .span-2.error{ color:#f85149; font-style: normal; }
 
-/* actions */
+.form-card .span-2.error{
+    color: var(--danger, #f85149);
+    font-style: normal;
+}
+
 .actions{
     grid-column: 1 / -1;
     display:flex;
     justify-content:flex-end;
     margin-top: .25rem;
 
-    /* include in stagger */
     opacity:0; transform: translateY(8px);
     animation: fieldIn .42s ease-out .22s both;
 }
@@ -162,13 +149,11 @@ label{ color:var(--text); font-size:.9rem; }
 .btn-primary:active:enabled{ transform: translateY(1px); }
 .btn-primary[disabled]{ opacity:.6; cursor:not-allowed; }
 
-/* mobile */
 @media (max-width: 720px){
     .form-grid{ grid-template-columns: 1fr; }
     .row-2{ grid-template-columns: 1fr; }
 }
 
-/* keyframes */
 @keyframes pageIn{
     from{ opacity:0; transform: translateY(6px); }
     to  { opacity:1; transform: translateY(0); }
@@ -185,7 +170,6 @@ label{ color:var(--text); font-size:.9rem; }
     from{ opacity:0; transform: translateY(8px); }
     to  { opacity:1; transform: translateY(0); }
 }
-/* new: error animations */
 @keyframes errorIn{
     from { opacity:0; transform: translateY(-4px); }
     to   { opacity:1; transform: translateY(0); }
@@ -195,7 +179,6 @@ label{ color:var(--text); font-size:.9rem; }
     100% { box-shadow: 0 0 0 10px rgba(248,81,73,0); }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
     :host,
     .form-card,

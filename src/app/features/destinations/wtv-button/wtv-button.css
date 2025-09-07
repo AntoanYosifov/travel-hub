@@ -8,58 +8,50 @@
 }
 
 .wtv-btn{
-    display: inline-grid;
-    grid-auto-flow: column;
-    grid-template-columns: 1.25rem auto;
-    align-items: center;
-    gap: .5rem;
-
-    background: var(--bg-elev);
-    color: var(--text);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: .45rem .75rem;
-    min-height: 36px;
+    display:inline-grid;
+    grid-auto-flow:column;
+    grid-template-columns:1.25rem auto;
+    align-items:center;
+    gap:.5rem;
+    background:var(--bg-elev);
+    color:var(--text);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:.45rem .75rem;
+    min-height:36px;
     cursor:pointer;
-
-    min-width: 10.5rem;
-    white-space: nowrap;
-
-    transition: border-color .15s, box-shadow .15s, transform .05s, background .15s;
+    min-width:10.5rem;
+    white-space:nowrap;
+    transition:border-color .15s, box-shadow .15s, transform .05s, background .15s;
 }
-
 .wtv-btn .icon{
-    width: 1.25rem;
-    text-align: center;
-    font-size: 1rem;
-    line-height: 1;
+    width:1.25rem;
+    text-align:center;
+    font-size:1rem;
+    line-height:1;
 }
-
 .wtv-btn .label{
-    font-weight: 600;
-    font-size: .9rem;
-    color: var(--text);
+    font-weight:600;
+    font-size:.9rem;
+    color:var(--text);
 }
-
 .wtv-btn:hover:not(:disabled){
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px rgba(88,166,255,.15);
+    border-color:var(--accent);
+    box-shadow:0 0 0 3px rgba(88,166,255,.15);
 }
-.wtv-btn:active:not(:disabled){ transform: translateY(1px); }
-
+.wtv-btn:active:not(:disabled){ transform:translateY(1px); }
 .wtv-btn.added{
-    background: linear-gradient(180deg, rgba(247,120,186,.10), rgba(247,120,186,.05));
-    border-color: color-mix(in srgb, var(--pin) 40%, var(--border));
+    background:linear-gradient(180deg, rgba(247,120,186,.10), rgba(247,120,186,.05));
+    border-color:color-mix(in srgb, var(--pin) 40%, var(--border));
 }
-.wtv-btn.added .label{ color: #ffd6ea; }
-
+.wtv-btn.added .label{ color:#ffd6ea; }
 .wtv-btn:disabled{
-    opacity: .6;
-    cursor: not-allowed;
-    box-shadow: none;
+    opacity:.6;
+    cursor:not-allowed;
+    box-shadow:none;
 }
 
-@media (max-width: 480px){
-    .like-btn{ min-width: 2.4rem; padding: .45rem; }
+@media (max-width:480px){
+    .like-btn{ min-width:2.4rem; padding:.45rem; }
     .like-btn .label{ display:none; }
 }

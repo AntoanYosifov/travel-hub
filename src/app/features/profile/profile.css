@@ -7,21 +7,18 @@
     --accent:#58a6ff;
 }
 
-/* Page fade-in */
 :host{
     display:block;
     animation: pageIn .35s ease-out both;
     will-change: opacity, transform;
 }
 
-/* ---------- shell ---------- */
 .outer-container{
     margin: 0 auto;
     max-width: min(640px, 94vw);
     padding: 2rem 1rem 3rem;
     display:flex;
     justify-content:center;
-
 }
 
 .profile-card{
@@ -33,19 +30,16 @@
 }
 .inner-container{ padding: 1.25rem; }
 
-/* ---------- title (gradient + underline + entrance) ---------- */
 .profile-title{
     margin: 0 0 1rem;
     font-size: clamp(1.2rem, .8vw + 1rem, 1.6rem);
     font-weight: 700;
     letter-spacing: .2px;
     line-height: 1.15;
-
     color: transparent;
     background: linear-gradient(180deg, #e8f1ff, #b6d8ff 65%, #7fb6ff);
     -webkit-background-clip: text;
     background-clip: text;
-
     position: relative;
     animation: titleUp .42s ease-out both;
 }
@@ -59,14 +53,11 @@
     border-radius:2px;
 }
 
-/* ---------- rows & badges ---------- */
 .kv-row{
     display:flex;
     align-items:center;
     gap:.75rem;
     margin-bottom: .9rem;
-
-    /* soft stagger for the rows */
     opacity:0; transform: translateY(8px);
     animation: fieldIn .42s ease-out both;
 }
@@ -103,10 +94,8 @@
     color: var(--muted);
 }
 
-/* keep layout tidy */
 .inner-container *{ margin-bottom: 0; }
 
-/* ---------- buttons ---------- */
 .btn{
     --h: 38px;
     display:inline-flex;
@@ -160,14 +149,12 @@
     filter: brightness(1.03);
 }
 
-/* ---------- edit form (with its own pop) ---------- */
 .edit-form{
     margin-top: .75rem;
     padding: .9rem;
     border: 1px dashed var(--border);
     border-radius: 12px;
     background: linear-gradient(180deg, rgba(88,166,255,.06), transparent 120%);
-
     opacity:0; transform: translateY(8px);
     animation: fieldIn .42s ease-out .08s both;
 }
@@ -188,7 +175,6 @@
     box-shadow: 0 0 0 3px rgba(88,166,255,.15);
 }
 
-/* validation */
 .input-error{
     border-color:#f85149 !important;
     box-shadow: 0 0 0 3px rgba(248,81,73,.12);
@@ -206,7 +192,6 @@
     justify-content:flex-end;
 }
 
-/* ---------- keyframes ---------- */
 @keyframes pageIn{
     from{ opacity:0; transform: translateY(6px); }
     to  { opacity:1; transform: translateY(0); }
@@ -224,7 +209,6 @@
     to  { opacity:1; transform: translateY(0); }
 }
 
-/* Respect reduced motion */
 @media (prefers-reduced-motion: reduce){
     :host,
     .profile-card,

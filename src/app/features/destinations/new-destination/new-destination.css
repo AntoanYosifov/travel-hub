@@ -109,6 +109,11 @@
     border-radius:12px; padding:.6rem 1rem; font-weight:600; cursor: pointer;
 }
 
+.btn-accent[disabled] {
+    cursor:not-allowed;
+    opacity:.6;
+}
+
 /* ---------- file picker (pretty) ---------- */
 .new-destination .file-picker{
     display:flex; align-items:center; gap:.6rem;

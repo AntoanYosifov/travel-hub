@@ -24,7 +24,7 @@ export class NewDestination implements OnInit {
     selectedFile: File | null = null;
     previewUrl: string | null = null;
     uploading = false;
-    uploadProgress = 0;           // 0..100
+    uploadProgress = 0;
     fileError: string | null = null;
 
     constructor(
@@ -150,7 +150,7 @@ export class NewDestination implements OnInit {
             };
 
             this.destinationService.addDestination(data).subscribe({
-                next: () => this.router.navigate(['/destinations']),
+                next: (created: Destination) => this.router.navigate(['/destinations', created.id], {replaceUrl: true}),
                 error: err => alert('Failed to add destination: ' + (err?.message ?? 'Unknown error'))
             });
         } catch (e: any) {

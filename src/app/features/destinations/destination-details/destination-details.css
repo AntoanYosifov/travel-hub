@@ -1,16 +1,13 @@
 :root{
-    --bg-card:#0d1117; --bg-elev:#161b22; --border:#30363d;
-    --text:#c9d1d9; --muted:#8b949e; --accent:#58a6ff;
+    --bg-card:#0d1117; --bg-elev:#161b22; --border:#30363d; --text:#c9d1d9; --muted:#8b949e; --accent:#58a6ff;
 }
 
-/* Animate the component itself */
 :host{
     display:block;
     animation: detailsIn .35s ease-out both;
     will-change: opacity, transform;
 }
 
-/* === wrapper === */
 .details-container{
     max-width: min(1100px, 92vw);
     margin: 0 auto;
@@ -18,7 +15,6 @@
     border: none;
 }
 
-/* === title === */
 .details-container > h4{
     margin: 0 0 .75rem;
     font-size: clamp(1.1rem, .7vw + 1rem, 1.4rem);
@@ -42,7 +38,6 @@
     opacity:.95;
 }
 
-/* Fade in the child card */
 .details-container :where(app-destination-item){
     opacity:0;
     transform: translateY(8px) scale(.99);
@@ -50,7 +45,6 @@
     will-change: opacity, transform;
 }
 
-/* === owner actions / edit box === */
 .owner-actions{
     margin-top: .75rem;
     display: flex;
@@ -92,7 +86,6 @@
     margin-top:.6rem;
 }
 
-/* === buttons === */
 .btn{
     display:inline-flex; align-items:center; gap:.4rem;
     padding:.45rem .8rem; border-radius:999px;
@@ -100,15 +93,11 @@
     text-decoration:none; font-weight:600;
     transition: background .2s, border-color .2s, transform .02s, filter .2s;
 }
-
-/* Limit the dark-on-hover to NON-accent & NON-disabled buttons */
 .btn:hover:not(.btn-accent):not([disabled]){
     border-color:#3d444d;
     background:#11161a;
     transform: translateY(-1px);
 }
-
-/* Accent button keeps its blue on hover */
 .btn-accent{
     background: var(--accent);
     color: #0b1220;
@@ -117,12 +106,10 @@
 }
 .btn-accent:hover{
     filter: brightness(1.06);
-    background: var(--accent);           /* stay blue */
+    background: var(--accent);
     border-color: transparent;
     transform: translateY(-1px);
 }
-
-/* Disabled states stay readable and don’t change on hover */
 .btn[disabled],
 .btn[disabled]:hover{
     cursor: not-allowed;
@@ -133,11 +120,9 @@
     color:#93a4b7;
     opacity: .9;
 }
-
-/* Specific disabled look for accent button */
 .btn-accent[disabled],
 .btn-accent[disabled]:hover{
-    background:#234170;          /* muted blue */
+    background:#234170;
     border-color:#3a5ea3;
     color:#d9e7ff;
     box-shadow:none;
@@ -145,15 +130,11 @@
     transform:none;
     filter:none;
 }
-
-/* Danger variant unchanged */
 .btn.danger{ background:#2b0f14; border-color:#712b2f; color:#ffb4b4; }
 .btn.danger:hover:not([disabled]){ background:#3a1419; border-color:#8b373c; }
 
-/* Muted helper */
 .muted{ color: var(--muted); }
 
-/* === keyframes === */
 @keyframes detailsIn{
     from{ opacity:0; transform: translateY(6px); }
     to  { opacity:1; transform: translateY(0); }
@@ -167,7 +148,6 @@
     100% { opacity:1; transform: translateY(0)  scale(1);   filter: saturate(1); }
 }
 
-/* Reduced motion */
 @media (prefers-reduced-motion: reduce){
     :host,
     .details-container > h4,
