@@ -4,6 +4,8 @@
 
 # TravelHub
 
+## Live: -> https://antoanyosifov.github.io/travel-hub/
+
 A small Angular app for sharing travel destinations. Users can register/login, add destinations, like/save places (“Want to visit”), and manage personal collections — all in a clean, dark-theme UI.
 
 ## Tech Used
