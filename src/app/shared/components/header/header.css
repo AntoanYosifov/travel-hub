@@ -125,6 +125,21 @@
 }
 
 @media (max-width: 820px){
+    .nav-link,
+    .dropdown-toggle,
+    .submenu-link {
+        font-size: 0.95rem;
+        white-space: normal;
+        word-break: break-word;
+    }
+
+
+    .dropdown-toggle {
+        display: block;
+        width: 100%;
+        text-align: left;
+    }
+
     .container{ padding:.64rem .8rem; }
     .nav-toggle{ display:inline-flex; }
     .main-nav{ position: static; }
