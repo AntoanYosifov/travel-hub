@@ -1,3 +1,7 @@
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/3a7e9ead-8a7d-4d8e-bf72-7f2cc6d1a07d" />
+
+
+
 # TravelHub
 
 A small Angular app for sharing travel destinations. Users can register/login, add destinations, like/save places (“Want to visit”), and manage personal collections — all in a clean, dark-theme UI.
